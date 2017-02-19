@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+
+        <h1>Stack Trainer</h1><button disabled>Reset</button>
+        <hr />
+        <div id="welcome" data-bind="visible:welcomeVisible">
+            <h3>Welcome to the stack trainer.</h3>
+            <p>Please select what stack you would like to use from the list below.</p>
+            <p>Three of the most popular stacks have been included; <del>to create your own custom stack, please click here.</del></p>
+            <select data-bind="value:stackChoice">
+                <option disabled selected hidden></option>
+                <option>Tamariz</option>
+                <option>Aragon</option>
+                <option>Aronson</option>
+            </select>
+            <!-- TODO: animate this intro bit; fade in reset button after the text about it appears -->
+            <p>All progress will be saved on this device. To reset please hit the reset button.</p>
+            <button data-bind="enable: (viewModel.stackChoice() !== '')">Begin</button>
+        </div>
+        <div id="app" >
+            <div id="coloursthatsowprogress"></div>
+            <!-- Question style A -->
+            <div data-bind="visible: questionStyleAVisible">
+                <p>At what position is the <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
+                <input></input>
+            </div>
+            <!-- Question style B -->
+            <div data-bind="visible: questionStyleBVisible">
+                <p>What card is at position <span data-bind="text:currentCardPosition"></span>?</p>
+                <input></input>
+            </div>
+            <!-- Question style C -->
+            <div data-bind="visible: questionStyleCVisible">
+                <p>What card comes before the <span></span> of <span></span>?</p>
+                <input></input>
+            </div>
+            <!-- Question style D -->
+            <div data-bind="visible: questionStyleDVisible">
+                <p>What card comes after the <span></span> of <span></span>?</p>
+                <input></input>
+            </div>
+        </div>
+        <script src="js/vendor/jquery-1.11.2.min.js"></script>
+        <script src="js/vendor/knockout.min.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            ko.applyBindings(viewModel);
+        </script>
+    </body>
+</html>

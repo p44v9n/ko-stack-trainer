@@ -1,0 +1,16 @@
+body {
+	margin:120px 20%;
+	background-color:#EEE;
+}
+h1, h3, p {
+	color:#333;
+	font-family: 'Helvetica Neue Light', 'Calibri Light', sans-serif;
+}
+h1 { font-size:2em; } h3 {font-size:1.6em; font-weight:300;}
+p {
+	font-size: 1.3em;
+	line-height: 1.4;
+}
+button[disabled]{
+	color:#aaa;
+}
