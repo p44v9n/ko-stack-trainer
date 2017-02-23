@@ -29,6 +29,16 @@ button[disabled]{
 	color:white;
 }
 
+.correct {
+	background-color:darkgreen;
+	color:white;
+}
+.wrong{
+	background-color:darkred;
+	color:white;
+}
+
 select, option, button {
 	padding:.6em;
 }
+
