@@ -2,7 +2,7 @@ body {
 	margin:120px 20%;
 	background-color:#EEE;
 }
-h1, h3, p {
+h1, h3, p, button, select, option {
 	color:#333;
 	font-family: 'Helvetica Neue Light', 'Calibri Light', sans-serif;
 }
@@ -13,4 +13,22 @@ p {
 }
 button[disabled]{
 	color:#aaa;
+}
+
+.positiondiv{
+	display:inline-block;
+	padding:20px;
+	margin:5px;
+	border-radius:50%;
+	background-color: lightgray;
+	cursor:pointer;
+	box-shadow:2px 2px darkgray;
+}
+.positiondiv:focus,.positiondiv:active, .selected {
+	background-color:#333;
+	color:white;
+}
+
+select, option, button {
+	padding:.6em;
 }

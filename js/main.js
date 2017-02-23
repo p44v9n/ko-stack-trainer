@@ -3,14 +3,20 @@ var viewModel = {
 	currentCardPosition: ko.observable(),
 	currentCardValue: ko.observable(),
 	currentCardSuit: ko.observable(),
+	userCardPosition: ko.observable(),
+	userCardValue: ko.observable(),
+	userCardSuit: ko.observable(),
 	currentBank: ko.observableArray([1, 2, 3, 4, 5, 6, 7]),
+	currentCorrect: ko.observable(),
 
 	welcomeVisible: ko.observable(true),
-	appVisible:ko.observable(true),
+	appVisible:ko.observable(false),
 	questionStyleAVisible:ko.observable(false),
-	questionStyleBVisible:ko.observable(true),
+	questionStyleBVisible:ko.observable(false),
 	questionStyleCVisible:ko.observable(false),
 	questionStyleDVisible:ko.observable(false),
+	checkVisible:ko.observable(false),
+	nextVisible:ko.observable(false),
 };
 
 viewModel.stackChoice.subscribe(function (value){
@@ -43,9 +49,14 @@ for (var i = 0; i<53; i++){
 	scores.push([0,0,0]);
 }
 
+var begin = function(){
+	viewModel.welcomeVisible(false);
+	viewModel.appVisible(true);
+	newQuestion();
+}
 
 var newQuestion = function(){
-	var correct = false;
+	viewModel.currentCorrect = false;
 	// take card from from of array
 	if (viewModel.currentBank().length > 0) {
 		var x = viewModel.currentBank.shift();
@@ -54,7 +65,7 @@ var newQuestion = function(){
 		viewModel.currentCardSuit(stack[x][1]);
 		// do the question and add scores
 		var randomSeed = Math.floor((Math.random() * 10) + 1);
-		var randomSeed = 2; // for debug
+		var randomSeed = 1; // for debug
 		switch (randomSeed) {
 			case 1: 
 				viewModel.questionStyleAVisible(true);
@@ -65,24 +76,31 @@ var newQuestion = function(){
 				// do the getting user input here
 				// then
 				
-				if (true) { 
-					correct = true; 
-				}
 			break;
 			case 3:
 			break;
 			case 4:
 			break;
-			
 		}
+		viewModel.nextVisible(false);
+		viewModel.checkVisible(true);
+}
+
+var check = function(){
+
 		// scorekeeping:
 		scores[x][0]++; // increase attempts by 1
-		if (correct) { // if correct add correct answers by 1 and streak of corrects
+		if (viewModel.currentCorrect()) { // if correct add correct answers by 1 and streak of corrects
 			scores[x][1]++;
 			scores[x][2]++;
+			// disableButtons and show green on selected
+
 		} else { // else reset streak of corrects
 			scores[x][2] = 0;
+			// disableButtons, show green on correct and red on the selected
 		}
+
+
 		if (scores[x][2]>5) { // if streak > 5
 			// add new card (number) to bank and don't re add current card
 		} else { // else readd
@@ -94,6 +112,9 @@ var newQuestion = function(){
 		// put back in bank at other end i.e. so that when we pop we pick a new card
 		// }
 		// if 
+
+		viewModel.checkVisible(false);
+		viewModel.nextVisible(true);
 	}
 }
 
