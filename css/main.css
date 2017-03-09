@@ -15,16 +15,32 @@ button[disabled]{
 	color:#aaa;
 }
 
-.positiondiv{
+#app, #welcome {
+	margin:0 auto;
+	text-align: center
+}
+
+.positiondiv, .suitdiv, .valuediv {
 	display:inline-block;
 	padding:20px;
 	margin:5px;
 	border-radius:50%;
-	background-color: lightgray;
+	background-color: #ccc;
 	cursor:pointer;
 	box-shadow:2px 2px darkgray;
+	color:black;
 }
-.positiondiv:focus,.positiondiv:active, .selected {
+.suitdiv{
+	font-size:2em;
+	padding:20px 30px;
+}
+.valuediv{
+	padding:15px 20px;
+}
+.red {
+	color:red;
+}
+.selected {
 	background-color:#333;
 	color:white;
 }
@@ -37,8 +53,31 @@ button[disabled]{
 	background-color:darkred;
 	color:white;
 }
+.disabled {
+	color:#aaa;
+}
 
 select, option, button {
 	padding:.6em;
+}
+
+#scorecolourholder {
+	width:100%;
+}
+.scorecolour {
+	width:1.6%;
+	display:inline-block;
+	background-color:lightgrey;
+	border:white solid 1px;
+	height:20px;
+}
+.linebreak { 
+	display:none;
+}
+
+@media (max-width: 1495px) {
+	.linebreak { 
+		display:block;
+	}
 }
 
