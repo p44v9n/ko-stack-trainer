@@ -2,7 +2,7 @@ body {
 	margin:120px 20%;
 	background-color:#EEE;
 }
-h1, h3, p, button, select, option {
+h1, h3, p, button, select, option, li, td {
 	color:#333;
 	font-family: 'Helvetica Neue Light', 'Calibri Light', sans-serif;
 }
@@ -13,6 +13,9 @@ p {
 }
 button[disabled]{
 	color:#aaa;
+}
+li{
+	padding-bottom: 20px
 }
 
 #app, #welcome {
@@ -53,6 +56,12 @@ button[disabled]{
 	background-color:darkred;
 	color:white;
 }
+.correct-shadow{
+	box-shadow: green 0 0 20px 4px;
+}
+.wrong-shadow{
+	box-shadow: red 0 0 20px 4px;
+}
 .disabled {
 	color:#aaa;
 }
@@ -68,16 +77,78 @@ select, option, button {
 	width:1.6%;
 	display:inline-block;
 	background-color:lightgrey;
-	border:white solid 1px;
 	height:20px;
 }
 .linebreak { 
 	display:none;
 }
+hr {
+	border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #aaa, rgba(0, 0, 0, 0));
+}
 
-@media (max-width: 1495px) {
-	.linebreak { 
+.panel {
+	padding:10px 5%;
+    position: absolute;
+    background-color: #444;
+    width: 50%;
+}
+
+.panel p, .panel h1, .panel li, .panel ul li a {
+	color:white;
+}
+.closebutton {
+    position: relative;
+    float: right;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 2em;
+    padding: 10px 0;
+}
+
+table {
+	margin:0 auto;
+}
+tbody{
+	display: inline-block;
+    padding: 0 20px;
+    border-bottom: white 1px solid;
+}
+td {
+	padding:5px 10px;
+	color:white;
+	font-size:1.2em;
+}
+
+#buttonlist{
+	float: right; margin-top: -3em;
+}
+#mobilenav {
+	display:none;
+	cursor:pointer;
+}
+@media (max-width:880px) {
+	#buttonlist {
+		display:none;
+	}
+	#mobilenav {
+		display:block;
+		margin-top:-4em;
+	}
+		.linebreak { 
 		display:block;
 	}
 }
 
+.menu-open{
+
+    display: block !important;
+    float: none !important;
+    margin-top: -4em !important;
+}
+.menu-open button{
+	padding:20px;
+	width:100%;
+}

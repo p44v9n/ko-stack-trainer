@@ -1,140 +1,369 @@
 <!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content=">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Stack Trainer</title>
+    <meta name="description" content="A simple game for memorising the order of a deck of cards.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/normalize.min.css">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-        <h1>Stack Trainer</h1>
-        <button disabled id="reset-button" style="float: right; margin-top: -3em;" data-bind="click:wipeLocalStorage">Reset</button>
-        <hr />
-        <div id="welcome" data-bind="visible:welcomeVisible">
-            <h3>Welcome to the Stack Trainer.</h3>
-            <p>Please select what stack you would like to use from the list below.</p>
-            <p>Three of the most popular stacks have been included; <del>to create your own custom stack, please click here.</del></p>
-            <select data-bind="value:stackChoice">
-                <option disabled selected hidden></option>
-                <option>Tamariz</option>
-                <option>Aragon (not set)</option>
-                <option>Aronson (not set)</option>
-            </select>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="menu">
+        <div id="mobilenav" onclick="$('#buttonlist').toggleClass('menu-open');">
+         <span style="font-size: 2em">☰</span>
+     </div>
+ </div>
+ <h1>Stack Trainer</h1>
+ <div class="menu">
+    <div id="buttonlist">
+    <button onclick="window.open('https://github.com/p44v9n/ko-stack-trainer', '_blank')"><!-- <img height="15" src="img/github-512.png" /> -->Contribute</button>
+        <button onclick="viewModel.resourcesVisible(true); viewModel.appVisible(false); viewModel.cheatVisible(false)">Resources</button>
+        <button onclick="viewModel.cheatVisible(true); viewModel.appVisible(false); viewModel.resourcesVisible(false)">Cheat Sheet</button>
+        <button data-bind="click:wipeLocalStorage">Reset</button>
+    </div>
+</div>
+<hr />
 
-            <!-- TODO: animate this intro bit; fade in reset button after the text about it appears -->
-            <p><del>Progress will be saved on this device. To reset progress or to choose another stack, please hit the reset button.</del></p>
-            <button data-bind="enable: (viewModel.stackChoice() !== ''), click:begin">Begin</button>
+
+<div id="welcome" data-bind="visible:welcomeVisible">
+    <h3>Welcome to the Stack Trainer.</h3>
+    <p>Please select what stack you would like to use from the list below.</p>
+    <p>Three popular stacks have been included; <del title="Coming soon.">to use a custom stack, please click here.</del></p>
+    <select data-bind="value:stackChoice">
+        <option disabled selected hidden></option>
+        <option>Tamariz</option>
+        <option>Aragón</option>
+        <option>Aronson</option>
+    </select>
+
+    <!-- TODO: animate this intro bit; fade in reset button after the text about it appears -->
+    <p>Progress will be saved on this device.<br />To reset progress or to choose another stack, please hit the reset button.</p>
+    <button data-bind="enable: (viewModel.stackChoice() !== ''), click:begin">Begin</button>
+</div>
+
+<div id="cheat" class="panel" data-bind="visible:cheatVisible">
+    <a onClick="viewModel.appVisible(true); viewModel.cheatVisible(false)" class="closebutton">✕</a>
+    <h1>Cheat sheet for the <span data-bind="text:stackChoice"></span> Stack</h1>
+    <!-- Mnemonica -->
+    <div data-bind="if:viewModel.stackChoice() === 'Tamariz'">
+        <table>
+            <tbody>
+                <tr><td>1</td><td>4 of ♣</td></tr>
+                <tr><td>2</td><td>2 of <span class="red">♥</span></td></tr>
+                <tr><td>3</td><td>7 of <span class="red">♦</span></td></tr>
+                <tr><td>4</td><td>3 of ♣</td></tr>
+                <tr><td>5</td><td>4 of <span class="red">♥</span></td></tr>
+                <tr><td>6</td><td>6 of <span class="red">♦</span></td></tr>
+                <tr><td>7</td><td>A of ♠</td></tr>
+                <tr><td>8</td><td>5 of <span class="red">♥</span></td></tr>
+                <tr><td>9</td><td>9 of ♠</td></tr>
+                <tr><td>10</td><td>2 of ♠</td></tr>
+                <tr><td>11</td><td>Q of <span class="red">♥</span></td></tr>
+                <tr><td>12</td><td>3 of <span class="red">♦</span></td></tr>
+                <tr><td>13</td><td>Q of ♣</td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>14</td><td>8 of <span class="red">♥</span></td></tr>
+                <tr><td>15</td><td>6 of ♠</td></tr>
+                <tr><td>16</td><td>5 of ♠</td></tr>
+                <tr><td>17</td><td>9 of <span class="red">♥</span></td></tr>
+                <tr><td>18</td><td>K of ♣</td></tr>
+                <tr><td>19</td><td>2 of <span class="red">♦</span></td></tr>
+                <tr><td>20</td><td>J of <span class="red">♥</span></td></tr>
+                <tr><td>21</td><td>3 of ♠</td></tr>
+                <tr><td>22</td><td>8 of ♠</td></tr>
+                <tr><td>23</td><td>6 of <span class="red">♥</span></td></tr>
+                <tr><td>24</td><td>10 of ♣</td></tr>
+                <tr><td>25</td><td>5 of <span class="red">♦</span></td></tr>
+                <tr><td>26</td><td>K of <span class="red">♦</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>27</td><td>2 of ♣</td></tr>
+                <tr><td>28</td><td>3 of <span class="red">♥</span></td></tr>
+                <tr><td>29</td><td>8 of <span class="red">♦</span></td></tr>
+                <tr><td>30</td><td>5 of ♣</td></tr>
+                <tr><td>31</td><td>K of ♠</td></tr>
+                <tr><td>32</td><td>J of <span class="red">♦</span></td></tr>
+                <tr><td>33</td><td>8 of ♣</td></tr>
+                <tr><td>34</td><td>10 of ♠</td></tr>
+                <tr><td>35</td><td>K of <span class="red">♥</span></td></tr>
+                <tr><td>36</td><td>J of ♣</td></tr>
+                <tr><td>37</td><td>7 of ♠</td></tr>
+                <tr><td>38</td><td>10 of <span class="red">♥</span></td></tr>
+                <tr><td>39</td><td>A of <span class="red">♦</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>40</td><td>4 of ♠</td></tr>
+                <tr><td>41</td><td>7 of <span class="red">♥</span></td></tr>
+                <tr><td>42</td><td>4 of <span class="red">♦</span></td></tr>
+                <tr><td>43</td><td>A of ♣</td></tr>
+                <tr><td>44</td><td>9 of ♣</td></tr>
+                <tr><td>45</td><td>J of ♠</td></tr>
+                <tr><td>46</td><td>Q of <span class="red">♦</span></td></tr>
+                <tr><td>47</td><td>7 of ♣</td></tr>
+                <tr><td>48</td><td>Q of ♠</td></tr>
+                <tr><td>49</td><td>10 of <span class="red">♦</span></td></tr>
+                <tr><td>50</td><td>6 of ♣</td></tr>
+                <tr><td>51</td><td>A of <span class="red">♥</span></td></tr>
+                <tr><td>52</td><td>9 of <span class="red">♦</span></td></tr>
+            </tbody>
+        </table>    
+    </div>
+    <!-- Aragón -->
+    <div data-bind="if:viewModel.stackChoice() === 'Arag&#243;n'">
+        <table>
+            <tbody>
+                <tr><td>1</td><td>J of ♠</td></tr>
+                <tr><td>2</td><td>7 of ♣</td></tr>
+                <tr><td>3</td><td>10 of <span class="red">♥</span></td></tr>
+                <tr><td>4</td><td>A of <span class="red">♦</span></td></tr>
+                <tr><td>5</td><td>4 of ♣</td></tr>
+                <tr><td>6</td><td>7 of <span class="red">♥</span></td></tr>
+                <tr><td>7</td><td>4 of <span class="red">♦</span></td></tr>
+                <tr><td>8</td><td>A of ♠</td></tr>
+                <tr><td>9</td><td>4 of <span class="red">♥</span></td></tr>
+                <tr><td>10</td><td>7 of <span class="red">♦</span></td></tr>
+                <tr><td>11</td><td>4 of ♠</td></tr>
+                <tr><td>12</td><td>A of <span class="red">♥</span></td></tr>
+                <tr><td>13</td><td>10 of <span class="red">♦</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>14</td><td>7 of ♠</td></tr>
+                <tr><td>15</td><td>J of ♣</td></tr>
+                <tr><td>16</td><td>K of <span class="red">♦</span></td></tr>
+                <tr><td>17</td><td>10 of ♠</td></tr>
+                <tr><td>18</td><td>8 of ♣</td></tr>
+                <tr><td>19</td><td>J of <span class="red">♥</span></td></tr>
+                <tr><td>20</td><td>A of ♣</td></tr>
+                <tr><td>21</td><td>K of ♠</td></tr>
+                <tr><td>22</td><td>5 of ♣</td></tr>
+                <tr><td>23</td><td>8 of <span class="red">♥</span></td></tr>
+                <tr><td>24</td><td>3 of <span class="red">♦</span></td></tr>
+                <tr><td>25</td><td>Q of ♠</td></tr>
+                <tr><td>26</td><td>K of <span class="red">♥</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>27</td><td>9 of ♣</td></tr>
+                <tr><td>28</td><td>Q of <span class="red">♥</span></td></tr>
+                <tr><td>29</td><td>6 of ♣</td></tr>
+                <tr><td>30</td><td>9 of <span class="red">♥</span></td></tr>
+                <tr><td>31</td><td>2 of <span class="red">♦</span></td></tr>
+                <tr><td>32</td><td>3 of ♣</td></tr>
+                <tr><td>33</td><td>6 of <span class="red">♥</span></td></tr>
+                <tr><td>34</td><td>5 of <span class="red">♦</span></td></tr>
+                <tr><td>35</td><td>2 of ♠</td></tr>
+                <tr><td>36</td><td>3 of <span class="red">♥</span></td></tr>
+                <tr><td>37</td><td>8 of <span class="red">♦</span></td></tr>
+                <tr><td>38</td><td>5 of ♠</td></tr>
+                <tr><td>39</td><td>K of ♣</td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>40</td><td>3 of ♣</td></tr>
+                <tr><td>41</td><td>2 of ♠</td></tr>
+                <tr><td>42</td><td>9 of <span class="red">♥</span></td></tr>
+                <tr><td>43</td><td>K of ♠</td></tr>
+                <tr><td>44</td><td>6 of ♠</td></tr>
+                <tr><td>45</td><td>4 of ♣</td></tr>
+                <tr><td>46</td><td>8 of <span class="red">♥</span></td></tr>
+                <tr><td>47</td><td>9 of ♣</td></tr>
+                <tr><td>48</td><td>Q of ♠</td></tr>
+                <tr><td>49</td><td>6 of <span class="red">♦</span></td></tr>
+                <tr><td>50</td><td>Q of ♣</td></tr>
+                <tr><td>51</td><td>2 of ♣</td></tr>
+                <tr><td>52</td><td>9 of <span class="red">♦</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Aronson -->
+    <div data-bind="if:viewModel.stackChoice() === 'Aronson'">
+        <table>
+            <tbody>
+                <tr><td>1</td><td>J of ♠</td></tr>
+                <tr><td>2</td><td>K of ♣</td></tr>
+                <tr><td>3</td><td>5 of ♣</td></tr>
+                <tr><td>4</td><td>2 of <span class="red">♥</span></td></tr>
+                <tr><td>5</td><td>9 of ♠</td></tr>
+                <tr><td>6</td><td>A of ♠</td></tr>
+                <tr><td>7</td><td>3 of <span class="red">♥</span></td></tr>
+                <tr><td>8</td><td>6 of ♣</td></tr>
+                <tr><td>9</td><td>8 of <span class="red">♦</span></td></tr>
+                <tr><td>10</td><td>A of ♣</td></tr>
+                <tr><td>11</td><td>10 of ♠</td></tr>
+                <tr><td>12</td><td>5 of <span class="red">♥</span></td></tr>
+                <tr><td>13</td><td>2 of <span class="red">♦</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>14</td><td>K of <span class="red">♦</span></td></tr>
+                <tr><td>15</td><td>7 of <span class="red">♦</span></td></tr>
+                <tr><td>16</td><td>8 of ♣</td></tr>
+                <tr><td>17</td><td>3 of ♠</td></tr>
+                <tr><td>18</td><td>A of <span class="red">♦</span></td></tr>
+                <tr><td>19</td><td>7 of ♠</td></tr>
+                <tr><td>20</td><td>5 of ♠</td></tr>
+                <tr><td>21</td><td>Q of <span class="red">♦</span></td></tr>
+                <tr><td>22</td><td>A of <span class="red">♥</span></td></tr>
+                <tr><td>23</td><td>8 of ♠</td></tr>
+                <tr><td>24</td><td>3 of <span class="red">♦</span></td></tr>
+                <tr><td>25</td><td>7 of <span class="red">♥</span></td></tr>
+                <tr><td>26</td><td>Q of <span class="red">♥</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>27</td><td>5 of <span class="red">♦</span></td></tr>
+                <tr><td>28</td><td>7 of ♣</td></tr>
+                <tr><td>29</td><td>4 of <span class="red">♥</span></td></tr>
+                <tr><td>30</td><td>K of <span class="red">♥</span></td></tr>
+                <tr><td>31</td><td>4 of <span class="red">♦</span></td></tr>
+                <tr><td>32</td><td>10 of <span class="red">♦</span></td></tr>
+                <tr><td>33</td><td>J of ♣</td></tr>
+                <tr><td>34</td><td>J of <span class="red">♥</span></td></tr>
+                <tr><td>35</td><td>10 of ♣</td></tr>
+                <tr><td>36</td><td>J of <span class="red">♦</span></td></tr>
+                <tr><td>37</td><td>4 of ♠</td></tr>
+                <tr><td>38</td><td>10 of <span class="red">♥</span></td></tr>
+                <tr><td>39</td><td>6 of <span class="red">♥</span></td></tr>
+            </tbody>
+            <tbody>
+                <tr><td>40</td><td>J of <span class="red">♦</span></td></tr>
+                <tr><td>41</td><td>8 of ♠</td></tr>
+                <tr><td>42</td><td>10 of ♣</td></tr>
+                <tr><td>43</td><td>2 of ♣</td></tr>
+                <tr><td>44</td><td>5 of <span class="red">♥</span></td></tr>
+                <tr><td>45</td><td>6 of <span class="red">♦</span></td></tr>
+                <tr><td>46</td><td>3 of ♠</td></tr>
+                <tr><td>47</td><td>2 of <span class="red">♥</span></td></tr>
+                <tr><td>48</td><td>9 of <span class="red">♦</span></td></tr>
+                <tr><td>49</td><td>6 of ♠</td></tr>
+                <tr><td>50</td><td>Q of ♣</td></tr>
+                <tr><td>51</td><td>Q of <span class="red">♦</span></td></tr>
+                <tr><td>52</td><td>9 of ♠</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <br /><br />
+</div>
+
+<div id="resources" class="panel" data-bind="visible:resourcesVisible">
+    <a onClick="viewModel.appVisible(true); viewModel.resourcesVisible(false)" class="closebutton">✕</a>
+    <h1>Resources</h1>
+    <p>To learn more about card magic using memorised stacks, please see the following:</p>
+    <ul>
+        <li><em><a href="http://www.simonaronson.com/Memories%20Are%20Made%20of%20This.pdf" target="_blank">Memories Are Made Of This</a></em>, a free ebook by Simon Aronson that gives an introduction to magic with memorised decks</li>
+        <li><em>Mnemonica</em> by Juan Tamariz, which reveals the workings of the <em>Mnemonica</em> stack, teaches how to memorise any stack forever in three hours, and has over a hundred tricks and routines</li>
+        <li><em>Bound To Please</em> by Simon Aronson</li>
+        <li><em>Memorandum</em> by Woody Aragón, soon to be released in English</li>
+
+    </ul>
+</div>
+
+<div id="app" data-bind="visible: appVisible">
+    <!-- Question style A -->
+    <div data-bind="visible: questionStyleAVisible">
+        <p>At what position is the <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
+        <div id="positionlist">
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 1)">&nbsp;1</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 2)">&nbsp;2</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 3)">&nbsp;3</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 4)">&nbsp;4</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 5)">&nbsp;5</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 6)">&nbsp;6</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 7)">&nbsp;7</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 8)">&nbsp;8</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 9)">&nbsp;9</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 10)">10</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 11)">11</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 12)">12</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 13)">13</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 14)">14</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 15)">15</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 16)">16</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 17)">17</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 18)">18</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 19)">19</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 20)">20</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 21)">21</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 22)">22</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 23)">23</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 24)">24</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 25)">25</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 26)">26</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 27)">27</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 28)">28</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 29)">29</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 30)">30</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 31)">31</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 32)">32</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 33)">33</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 34)">34</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 35)">35</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 36)">36</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 37)">37</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 38)">38</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 39)">39</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 40)">40</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 41)">41</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 42)">42</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 43)">43</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 44)">44</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 45)">45</div>
+            <br />
+            <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 46)">46</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 47)">47</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 48)">48</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 49)">49</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 50)">50</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 51)">51</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 52)">52</div>
         </div>
-        
-        <div id="app" data-bind="visible: appVisible">
-            <!-- Question style A -->
-            <div data-bind="visible: questionStyleAVisible">
-                <p>At what position is the <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
-                <div id="positionlist">
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 1)">&nbsp;1</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 2)">&nbsp;2</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 3)">&nbsp;3</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 4)">&nbsp;4</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 5)">&nbsp;5</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 6)">&nbsp;6</div>
-                    <div class="linebreak"></div>
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 7)">&nbsp;7</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 8)">&nbsp;8</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 9)">&nbsp;9</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 10)">10</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 11)">11</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 12)">12</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 13)">13</div>
-                    <br />
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 14)">14</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 15)">15</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 16)">16</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 17)">17</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 18)">18</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 19)">19</div>
-                    <div class="linebreak"></div>
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 20)">20</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 21)">21</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 22)">22</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 23)">23</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 24)">24</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 25)">25</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 26)">26</div>
-                    <br /><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 27)">27</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 28)">28</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 29)">29</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 30)">30</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 31)">31</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 32)">32</div>
-                    <div class="linebreak"></div>
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 33)">33</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 34)">34</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 35)">35</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 36)">36</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 37)">37</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 38)">38</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 39)">39</div>
-                    <br />
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 40)">40</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 41)">41</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 42)">42</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 43)">43</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 44)">44</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 45)">45</div>
-                    <div class="linebreak"></div>
-                    <div class="positiondiv" data-bind="click:userCardPosition.bind($data, 46)">46</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 47)">47</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 48)">48</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 49)">49</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 50)">50</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 51)">51</div><div class="positiondiv" data-bind="click:userCardPosition.bind($data, 52)">52</div>
-                </div>
-                <br />
-                <div data-bind="visible: checkVisible">
-                    <button data-bind="enable: (userCardPosition() !== null), click: check ">Check answer</button>
-                </div>
-            </div>
-            <!-- Question style B -->
-            <div data-bind="visible: questionStyleBVisible">
-                <p>What card is at position <span data-bind="text:currentCardPosition"></span>?</p>
-                <div id="suitlist">
-                    <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
-                </div>
-                <div id="valuelist">
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
-                    <br />
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
-                </div>
-                <br />
-                <div data-bind="visible: checkVisible">
-                    <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
-                </div>
-            </div>
-            <!-- Question style C -->
-            <div data-bind="visible: questionStyleCVisible">
-                <p>What card comes before the  <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
-                <div id="suitlist">
-                    <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
-                </div>
-                <div id="valuelist">
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
-                    <br />
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
-                </div>
-                <br />
-                <div data-bind="visible: checkVisible">
-                    <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
-                </div>
-            </div>
-            <!-- Question style D -->
-            <div data-bind="visible: questionStyleDVisible">
-                <p>What card comes after the <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
-                <div id="suitlist">
-                    <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
-                </div>
-                <div id="valuelist">
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
-                    <br />
-                    <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
-                </div>
-                <br />
-                <div data-bind="visible: checkVisible">
-                    <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
-                </div>
-            </div>
-            
-            <div data-bind="visible: nextVisible">
-                <button data-bind="click:newQuestion">Continue</button>
-            </div>
-            <hr />
-            <div id="scores">
-                <p>Total correct: <span></span>. Total attempts: <span></span>.</p>
-                <div class="scorecolourholder">
-                    <div id="score1" class="scorecolour"></div><div id="score2" class="scorecolour"></div><div id="score3" class="scorecolour"></div><div id="score4" class="scorecolour"></div><div id="score5" class="scorecolour"></div><div id="score6" class="scorecolour"></div><div id="score7" class="scorecolour"></div><div id="score8" class="scorecolour"></div><div id="score9" class="scorecolour"></div><div id="score10" class="scorecolour"></div><div id="score11" class="scorecolour"></div><div id="score12" class="scorecolour"></div><div id="score13" class="scorecolour"></div><div id="score14" class="scorecolour"></div><div id="score15" class="scorecolour"></div><div id="score16" class="scorecolour"></div><div id="score17" class="scorecolour"></div><div id="score18" class="scorecolour"></div><div id="score19" class="scorecolour"></div><div id="score20" class="scorecolour"></div><div id="score21" class="scorecolour"></div><div id="score22" class="scorecolour"></div><div id="score23" class="scorecolour"></div><div id="score24" class="scorecolour"></div><div id="score25" class="scorecolour"></div><div id="score26" class="scorecolour"></div>
-                </div>
-                <div class="scorecolourholder">
-                    <div id="score27" class="scorecolour"></div><div id="score28" class="scorecolour"></div><div id="score29" class="scorecolour"></div><div id="score30" class="scorecolour"></div><div id="score31" class="scorecolour"></div><div id="score32" class="scorecolour"></div><div id="score33" class="scorecolour"></div><div id="score34" class="scorecolour"></div><div id="score35" class="scorecolour"></div><div id="score36" class="scorecolour"></div><div id="score37" class="scorecolour"></div><div id="score38" class="scorecolour"></div><div id="score39" class="scorecolour"></div><div id="score40" class="scorecolour"></div><div id="score41" class="scorecolour"></div><div id="score42" class="scorecolour"></div><div id="score43" class="scorecolour"></div><div id="score44" class="scorecolour"></div><div id="score45" class="scorecolour"></div><div id="score46" class="scorecolour"></div><div id="score47" class="scorecolour"></div><div id="score48" class="scorecolour"></div><div id="score49" class="scorecolour"></div><div id="score50" class="scorecolour"></div><div id="score51" class="scorecolour"></div><div id="score52" class="scorecolour"></div>
-                </div>
-            </div>
+        <br />
+        <div data-bind="visible: checkVisible">
+            <button data-bind="enable: (userCardPosition() !== null), click: check ">Check answer</button>
         </div>
-        <script src="js/vendor/jquery-1.11.2.min.js"></script>
-        <script src="js/vendor/knockout.min.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-            ko.applyBindings(viewModel);
-            loadDataFromLocalStorage();
-            $('.positiondiv').on('click', function(){
-                $('.positiondiv').removeClass('selected');
-                $(this).addClass('selected');
-            });
-            $('.suitdiv').on('click', function(){
-               $('.suitdiv').removeClass('selected');
-                $(this).addClass('selected'); 
-            });
-            $('.valuediv').on('click', function(){
-               $('.valuediv').removeClass('selected');
-                $(this).addClass('selected'); 
-            });
-        </script>
-    </body>
+    </div>
+    <!-- Question style B -->
+    <div data-bind="visible: questionStyleBVisible">
+        <p>What card is at position <span data-bind="text:currentCardPosition"></span>?</p>
+        <div id="suitlist">
+            <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="linebreak"></div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
+        </div>
+        <div id="valuelist">
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
+        </div>
+        <br />
+        <div data-bind="visible: checkVisible">
+            <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+        </div>
+    </div>
+    <!-- Question style C -->
+    <div data-bind="visible: questionStyleCVisible">
+        <p>What card comes before the  <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
+        <div id="suitlist">
+            <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="linebreak"></div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
+        </div>
+        <div id="valuelist">
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
+        </div>
+        <br />
+        <div data-bind="visible: checkVisible">
+            <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+        </div>
+    </div>
+    <!-- Question style D -->
+    <div data-bind="visible: questionStyleDVisible">
+        <p>What card comes after the <span data-bind="text:currentCardValue"></span> of <span data-bind="text:currentCardSuit"></span>?</p>
+        <div id="suitlist">
+            <div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Clubs')">♣</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Hearts')">♥</div><div class="linebreak"></div><div class="suitdiv" data-bind="click:userCardSuit.bind($data, 'Spades')">♠</div><div class="suitdiv red" data-bind="click:userCardSuit.bind($data, 'Diamonds')">♦</div>
+        </div>
+        <div id="valuelist">
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, 'Ace')">A</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '2')">2</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '3')">3</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '4')">4</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '5')">5</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '6')">6</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '7')">7</div>
+            <div class="valuediv" data-bind="click:userCardValue.bind($data, '8')">8</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '9')">9</div><div class="valuediv" data-bind="click:userCardValue.bind($data, '10')">10</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Jack')">J</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'Queen')">Q</div><div class="valuediv" data-bind="click:userCardValue.bind($data, 'King')">K</div>
+        </div>
+        <br />
+        <div data-bind="visible: checkVisible">
+            <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+        </div>
+    </div>
+
+    <div data-bind="visible: nextVisible">
+        <button data-bind="click:newQuestion" id="continue-button">Continue</button>
+    </div>
+    <br />
+    <hr />
+    <div id="scores">
+        <!-- <p>Total correct: <span></span>. Total attempts: <span></span>.</p> -->
+        <div class="scorecolourholder">
+            <div id="score1" class="scorecolour"></div><div id="score2" class="scorecolour"></div><div id="score3" class="scorecolour"></div><div id="score4" class="scorecolour"></div><div id="score5" class="scorecolour"></div><div id="score6" class="scorecolour"></div><div id="score7" class="scorecolour"></div><div id="score8" class="scorecolour"></div><div id="score9" class="scorecolour"></div><div id="score10" class="scorecolour"></div><div id="score11" class="scorecolour"></div><div id="score12" class="scorecolour"></div><div id="score13" class="scorecolour"></div><div id="score14" class="scorecolour"></div><div id="score15" class="scorecolour"></div><div id="score16" class="scorecolour"></div><div id="score17" class="scorecolour"></div><div id="score18" class="scorecolour"></div><div id="score19" class="scorecolour"></div><div id="score20" class="scorecolour"></div><div id="score21" class="scorecolour"></div><div id="score22" class="scorecolour"></div><div id="score23" class="scorecolour"></div><div id="score24" class="scorecolour"></div><div id="score25" class="scorecolour"></div><div id="score26" class="scorecolour"></div>
+        </div>
+        <div class="scorecolourholder">
+            <div id="score27" class="scorecolour"></div><div id="score28" class="scorecolour"></div><div id="score29" class="scorecolour"></div><div id="score30" class="scorecolour"></div><div id="score31" class="scorecolour"></div><div id="score32" class="scorecolour"></div><div id="score33" class="scorecolour"></div><div id="score34" class="scorecolour"></div><div id="score35" class="scorecolour"></div><div id="score36" class="scorecolour"></div><div id="score37" class="scorecolour"></div><div id="score38" class="scorecolour"></div><div id="score39" class="scorecolour"></div><div id="score40" class="scorecolour"></div><div id="score41" class="scorecolour"></div><div id="score42" class="scorecolour"></div><div id="score43" class="scorecolour"></div><div id="score44" class="scorecolour"></div><div id="score45" class="scorecolour"></div><div id="score46" class="scorecolour"></div><div id="score47" class="scorecolour"></div><div id="score48" class="scorecolour"></div><div id="score49" class="scorecolour"></div><div id="score50" class="scorecolour"></div><div id="score51" class="scorecolour"></div><div id="score52" class="scorecolour"></div>
+        </div>
+    </div>
+</div>
+<script src="js/vendor/jquery-1.11.2.min.js"></script>
+<script src="js/vendor/knockout.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    $('.menu').hide();
+    ko.applyBindings(viewModel);
+    loadDataFromLocalStorage();
+    $('.positiondiv').on('click', function(){
+        $('.positiondiv').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    $('.suitdiv').on('click', function(){
+     $('.suitdiv').removeClass('selected');
+     $(this).addClass('selected'); 
+ });
+    $('.valuediv').on('click', function(){
+     $('.valuediv').removeClass('selected');
+     $(this).addClass('selected'); 
+ });
+</script>
+</body>
 </html>

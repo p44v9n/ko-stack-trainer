@@ -13,13 +13,16 @@ var viewModel = {
 	
 	// other things we use
 	currentBank: ko.observableArray([1, 2, 3, 4, 5, 6, 7]),
+	untested: ko.observableArray([8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]),
 	randomSeed:ko.observable(),
 	scores: ko.observableArray(),
-	// totalAttempts:ko.computed(), TODO
+	// totalAttempts:ko.computed(), TODO  - computed observable?
 	// totalCorrect:ko.computed(), TODO
 
 	// visibility
 	welcomeVisible: ko.observable(true),
+	resourcesVisible:ko.observable(false),
+	cheatVisible:ko.observable(false),
 	appVisible:ko.observable(false),
 	questionStyleAVisible:ko.observable(false),
 	questionStyleBVisible:ko.observable(false),
@@ -33,9 +36,9 @@ viewModel.stackChoice.subscribe(function (value){
 	switch(value) {
 		case 'Tamariz': stack = tamarizStack;
 		break;
-		case 'Aronson': stack = aronsonStack;
+		case 'Aragón': stack = aragonStack;
 		break;
-		case 'Aragon': stack = aragonStack;
+		case 'Aronson': stack = aronsonStack;
 		break;
 	}
 });
@@ -58,15 +61,14 @@ function shuffle(array) {
         array[counter] = array[index];
         array[index] = temp;
     }
-
     return array;
 }
 
 
 var stack;
 var tamarizStack = [null, ['4', 'Clubs'], ['2', 'Hearts'], ['7', 'Diamonds'], ['3', 'Clubs'], ['4', 'Hearts'], ['6', 'Diamonds'], ['Ace', 'Spades'], ['5', 'Hearts'], ['9', 'Spades'], ['2', 'Spades'], ['Queen', 'Hearts'], ['3', 'Diamonds'], ['Queen', 'Clubs'], ['8', 'Hearts'], ['6', 'Spades'], ['5', 'Spades'], ['9', 'Hearts'], ['King', 'Clubs'], ['2', 'Diamonds'], ['Jack', 'Hearts'], ['3', 'Spades'], ['8', 'Spades'], ['6', 'Hearts'], ['10', 'Clubs'], ['5', 'Diamonds'], ['King', 'Diamonds'], ['2', 'Clubs'], ['3', 'Hearts'], ['8', 'Diamonds'], ['5', 'Clubs'], ['King', 'Spades'], ['Jack', 'Diamonds'], ['8', 'Clubs'], ['10', 'Spades'], ['King', 'Hearts'], ['Jack', 'Clubs'], ['7', 'Spades'], ['10', 'Hearts'], ['Ace', 'Diamonds'], ['4', 'Spades'], ['7', 'Hearts'], ['4', 'Diamonds'], ['Ace', 'Clubs'], ['9', 'Clubs'], ['Jack', 'Spades'], ['Queen', 'Diamonds'], ['7', 'Clubs'], ['Queen', 'Spades'], ['10', 'Diamonds'], ['6', 'Clubs'], ['Ace', 'Hearts'], ['9', 'Diamonds']];
-var aronsonStack = []; // todo
-var aragonStack = []; // todo
+var aragonStack = [null, ['Jack', 'Spades'], ['7', 'Clubs'], ['10', 'Hearts'], ['Ace', 'Diamonds'], ['4', 'Clubs'], ['7', 'Hearts'], ['4', 'Diamonds'], ['Ace', 'Spades'], ['4', 'Hearts'], ['7', 'Diamonds'], ['4', 'Spades'], ['Ace', 'Hearts'], ['10', 'Diamonds'], ['7', 'Spades'], ['Jack', 'Clubs'], ['King', 'Diamonds'], ['10', 'Spades'], ['8', 'Clubs'], ['Jack', 'Hearts'], ['Ace', 'Clubs'], ['King', 'Spades'], ['5', 'Clubs'], ['8', 'Hearts'], ['3', 'Diamonds'], ['Queen', 'Spades'], ['King', 'Hearts'], ['9', 'Clubs'], ['Queen', 'Hearts'], ['6', 'Clubs'], ['9', 'Hearts'], ['2', 'Diamonds'], ['3', 'Clubs'], ['6', 'Hearts'], ['5', 'Diamonds'], ['2', 'Spades'], ['3', 'Hearts'], ['8', 'Diamonds'], ['5', 'Spades'], ['King', 'Clubs'], ['Jack', 'Diamonds'], ['8', 'Spades'], ['10', 'Clubs'], ['2', 'Clubs'], ['5', 'Hearts'], ['6', 'Diamonds'], ['3', 'Spades'], ['2', 'Hearts'], ['9', 'Diamonds'], ['6', 'Spades'], ['Queen', 'Clubs'], ['Queen', 'Diamonds'], ['9', 'Spades']];
+var aronsonStack = [null, ['Jack', 'Spades'], ['King', 'Clubs'], ['5', 'Clubs'], ['2', 'Hearts'], ['9', 'Spades'], ['Ace', 'Spades'], ['3', 'Hearts'], ['6', 'Clubs'], ['8', 'Diamonds'], ['Ace', 'Clubs'], ['10', 'Spades'], ['5', 'Hearts'], ['2', 'Diamonds'], ['King', 'Diamonds'], ['7', 'Diamonds'], ['8', 'Clubs'], ['3', 'Spades'], ['Ace', 'Diamonds'], ['7', 'Spades'], ['5', 'Spades'], ['Queen', 'Diamonds'], ['Ace', 'Hearts'], ['8', 'Spades'], ['3', 'Diamonds'], ['7', 'Hearts'], ['Queen', 'Hearts'], ['5', 'Diamonds'], ['7', 'Clubs'], ['4', 'Hearts'], ['King', 'Hearts'], ['4', 'Diamonds'], ['10', 'Diamonds'], ['Jack', 'Clubs'], ['Jack', 'Hearts'], ['10', 'Clubs'], ['Jack', 'Diamonds'], ['4', 'Spades'], ['10', 'Hearts'], ['6', 'Hearts'], ['3', 'Clubs'], ['2', 'Spades'], ['9', 'Hearts'], ['King', 'Spades'], ['6', 'Spades'], ['4', 'Clubs'], ['8', 'Hearts'], ['9', 'Clubs'], ['Queen', 'Spades'], ['6', 'Diamonds'], ['Queen', 'Clubs'], ['2', 'Clubs'], ['9', 'Diamonds']];
 
 var createNewStack = function(){
 	// todo -- user created stack
@@ -88,7 +90,7 @@ function begin(){
 	viewModel.welcomeVisible(false);
 	viewModel.appVisible(true);
 	newQuestion();
-	$('#reset-button').prop("disabled", false); // there needs to be a better way to do this -- remove disabled attribute but then also save as variable
+	$('.menu').show(); // there needs to be a better way to do this -- remove disabled attribute but then also save as variable
 }
 
 
@@ -100,9 +102,6 @@ function begin(){
 
 
 function newQuestion(){
-	// debug: check what's left in question bank
-	console.log("bank:"+viewModel.currentBank());
-
 	// remove stylings
 	$('.correct').removeClass('correct');
 	$('.wrong').removeClass('wrong');
@@ -135,7 +134,8 @@ function newQuestion(){
 
 	// choose what type of question to use:
 	viewModel.randomSeed((Math.floor((Math.random() * 4) + 1)));
-	// viewModel.randomSeed(3);
+	// viewModel.randomSeed(1); // debug
+	
 	// make that question visible
 	switch (viewModel.randomSeed()) {
 		case 1: // user picks position of given card
@@ -198,46 +198,63 @@ function check(){
 		break;
 	}
 
-	
 	// update scores array
 	viewModel.scores()[x][0]++; // increase attempts by 1
 	if (viewModel.currentCorrect()) { // if correct add correct answers by 1 and streak of corrects
 		// console.log("correct");
-		viewModel.scores()[x][1]++;
-		viewModel.scores()[x][2]++;
+		viewModel.scores()[x][1]++; // increase overall correct by 1
+		viewModel.scores()[x][2]++; // increase score streak by 1
 		$('.selected').addClass('correct');
+		$('#continue-button').removeClass('wrong-shadow');
+		$('#continue-button').addClass('correct-shadow');
 
 	} else { // else reset streak of corrects
 		// console.log("wrong");
-		viewModel.scores()[x][2] = 0;
-		// show green on correct and red on the selected
+		viewModel.scores()[x][2] = 0; // reset score streak to 0
+		// show red on the selected
 		$('.selected').addClass('wrong');
-		 
-		// same for value and suit
+		$('#continue-button').removeClass('correct-shadow');
+		$('#continue-button').addClass('wrong-shadow');
+		// TODO highlight green for value suit
 	}
 
 	// update colours: 
-	var perecentageCorrect = viewModel.scores()[x][1] / viewModel.scores()[x][0];
-	var rgbred = Math.round((1 - perecentageCorrect) * 255);
-	var rgbgreen = Math.round((perecentageCorrect * 205) + 50);
+	var percentageCorrect = viewModel.scores()[x][1] / viewModel.scores()[x][0];
+	var rgbred = Math.round((1 - percentageCorrect) * 255);
+	var rgbgreen = Math.round((percentageCorrect * 205) + 50);
 	$('#score'+x).css({
 		"background-color": "rgb("+rgbred+", "+rgbgreen+", 50)"
 	})
 
+	// console.log("card "+x+": "+percentageCorrect);
 
-	shuffle(viewModel.currentBank());
-	// todo check bank being updated
-	if (viewModel.scores()[x][2]>5) { // if streak > 5
-		// add new card (number) to bank and don't re add current card
-	} else { // else readd
+
+	// TODO there are duplicates in here?
+
+	// update bank
+	if ((percentageCorrect > 0.9) || viewModel.scores()[x][2]>3) { // if streak >= 4  or percentage > 90%
+		if (viewModel.untested() !== []){
+			var bob = viewModel.untested.shift();
+			viewModel.currentBank.push(bob);
+		}
+	} else { // else readd current card
 		viewModel.currentBank.push(x);
 	}
-	// if scores[x][2] > 5 then {
-		// dont readd card to bank and instead the next one along that has scores[x][0] === 0 (i.e. has no attempts)
-	// } else {
-	// put back in bank at other end i.e. so that when we pop we pick a new card
-	// }
-	// if bank empty add in first five again
+
+	// if bank empty add in first 7 again
+	if (viewModel.currentBank() === []){
+		viewModel.currentBank([1, 2, 3, 4, 5, 6, 7]);
+	}
+	if (viewModel.untested() === []){
+		viewModel.untested([8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]);
+	}
+
+	// shuffle card bank
+	shuffle(viewModel.currentBank());
+
+	// debug: check what's left in question bank
+	// console.log("bank:"+viewModel.currentBank());
+	// console.log("untested: "+viewModel.untested());
 
 	// make the check button not visible and the check button visible
 	viewModel.checkVisible(false);
@@ -245,6 +262,16 @@ function check(){
 	saveDataToLocalStorage()
 }
 
+function reloadColours() {
+	for (var i=1; i<53; i++){
+		var perecentageCorrect = viewModel.scores()[i][1] / viewModel.scores()[i][0];
+		var rgbred = Math.round((1 - perecentageCorrect) * 255);
+		var rgbgreen = Math.round((perecentageCorrect * 205) + 50);
+		$('#score'+i).css({
+			"background-color": "rgb("+rgbred+", "+rgbgreen+", 50)"
+	})
+	}
+}
 
 
 function saveDataToLocalStorage() {
@@ -266,6 +293,7 @@ function loadDataFromLocalStorage() {
 		viewModel.userCardValue(parsedData.userCardValue);
 		viewModel.userCardSuit(parsedData.userCardSuit);
 		viewModel.currentBank(parsedData.currentBank);
+		viewModel.untested(parsedData.untested);
 		viewModel.randomSeed(parsedData.randomSeed);
 		viewModel.scores(parsedData.scores);
 		viewModel.welcomeVisible(parsedData.welcomeVisible);
@@ -277,7 +305,8 @@ function loadDataFromLocalStorage() {
 		viewModel.checkVisible(parsedData.checkVisible);
 		viewModel.nextVisible(parsedData.nextVisible);
         // viewModel.UserName(parsedData.UserName);
-    	$('#reset-button').prop("disabled", false); 
+    	$('.menu').show(); // there needs to be a better way to do this -- remove disabled attribute but then also save as variable
+    	reloadColours() 
     }
 }
 
