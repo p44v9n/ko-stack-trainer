@@ -130,7 +130,7 @@ function newQuestion(){
 
 
 	// take card from bank
-	var x = viewModel.currentBank.shift();
+	var x = viewModel.currentBank()[0];
 
 	// set position, value and suit of this card
 	viewModel.currentCardPosition(x);
@@ -279,12 +279,12 @@ function calcscores(){
 
 	// update bank
 	if ((percentageCorrect > 0.9) || viewModel.scores()[x][2]>3) { // if streak >= 4  or percentage > 90%
+		viewModel.currentBank.shift();
 		if (viewModel.untested() !== []){
 			var bob = viewModel.untested.shift();
 			viewModel.currentBank.push(bob);
 		}
 	} else { // else readd current card
-		viewModel.currentBank.push(x);
 	}
 
 	// if bank empty add in first 7 again
@@ -300,6 +300,7 @@ function calcscores(){
 	shuffle(viewModel.currentBank());
 
 	// if same card comes to the front move it to the back, to avoid getting a duplicate question
+	// this is prob a silly way -- we should just re add back after
 	if (viewModel.currentBank()[0] === viewModel.currentCardPosition()){
 		var move = viewModel.currentBank.shift();
 		viewModel.currentBank.push(move);
