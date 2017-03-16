@@ -5,6 +5,7 @@ var viewModel = {
 	currentCardPosition: ko.observable(),
 	currentCardValue: ko.observable(),
 	currentCardSuit: ko.observable(),
+	currentAnswerAsText: ko.observable(),
 	// user values
 	currentCorrect: ko.observable(),
 	userCardPosition: ko.observable(null),
@@ -108,6 +109,10 @@ function newQuestion(){
 	$('.disabled').removeClass('disabled');
 	$('.selected').removeClass('selected');
 
+	// hide the correct answer box
+	$('#dontknowbox').hide();
+	viewModel.currentAnswerAsText('');
+
 	// reset current and user values
 	viewModel.currentCardPosition(null);
 	viewModel.currentCardValue(null);
@@ -158,6 +163,38 @@ function newQuestion(){
 	saveDataToLocalStorage()
 }
 
+function dontknow(){
+	$('.positiondiv').addClass('disabled'); // disable all buttons
+	$('.suitdiv').addClass('disabled');
+	$('.valuediv').addClass('disabled');
+	viewModel.currentCorrect(false);
+
+	switch (viewModel.randomSeed()) {		
+	case 1: // user picks position of given card
+			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+'.');
+	break;
+	case 2: // user picks card at given position 
+				viewModel.currentAnswerAsText('Card '+viewModel.currentCardPosition()+' is the '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+'.');
+	break;
+	case 3: // user gives card before a given card
+		if (viewModel.currentCardPosition() === 1){
+			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is card 52, the '+stack[52][0]+' of '+stack[52][1]+'.');
+		} else {
+			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is the '+stack[viewModel.currentCardPosition() - 1][0]+' of '+stack[viewModel.currentCardPosition() - 1][1]+'.');
+		}
+	break;
+	case 4: // user gives card that is after a given card
+		if (viewModel.currentCardPosition() === 52){
+					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is card 1, the '+stack[1][0]+' of '+stack[1][1]+'.');
+		} else {
+					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is the '+stack[viewModel.currentCardPosition() + 1][0]+' of '+stack[viewModel.currentCardPosition() + 1][1]+'.');
+		}
+	break;
+	}
+	$('#dontknowbox').show();
+	calcscores();
+}
+
 function check(){
 
 	$('.positiondiv').addClass('disabled'); // disable all buttons
@@ -182,8 +219,10 @@ function check(){
 				if ((viewModel.userCardSuit() === stack[52][1]) && (viewModel.userCardValue() === stack[52][0])){
 					viewModel.currentCorrect(true);
 				}
-			} else if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() - 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() - 1][0])){
-				viewModel.currentCorrect(true);
+			} else {
+				if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() - 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() - 1][0])){
+					viewModel.currentCorrect(true);
+				}
 			}
 		break;
 		case 4: // user gives card that is after a given card
@@ -191,12 +230,22 @@ function check(){
 				if ((viewModel.userCardSuit() === stack[1][1]) && (viewModel.userCardValue() === stack[1][0])){
 					viewModel.currentCorrect(true);
 				}
-			} else if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() + 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() + 1][0])){
-				viewModel.currentCorrect(true);
+			} else {
+				if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() + 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() + 1][0])){
+					viewModel.currentCorrect(true);
+				}
+
 			}
 		break;
 		break;
 	}
+
+	calcscores();
+}
+
+function calcscores(){
+
+	var x = viewModel.currentCardPosition();
 
 	// update scores array
 	viewModel.scores()[x][0]++; // increase attempts by 1
@@ -215,7 +264,6 @@ function check(){
 		$('.selected').addClass('wrong');
 		$('#continue-button').removeClass('correct-shadow');
 		$('#continue-button').addClass('wrong-shadow');
-		// TODO highlight green for value suit
 	}
 
 	// update colours: 
@@ -229,8 +277,6 @@ function check(){
 	// console.log("card "+x+": "+percentageCorrect);
 
 
-	// TODO there are duplicates in here?
-
 	// update bank
 	if ((percentageCorrect > 0.9) || viewModel.scores()[x][2]>3) { // if streak >= 4  or percentage > 90%
 		if (viewModel.untested() !== []){
@@ -242,6 +288,7 @@ function check(){
 	}
 
 	// if bank empty add in first 7 again
+	// TODO add a message, add a timer for next go around
 	if (viewModel.currentBank() === []){
 		viewModel.currentBank([1, 2, 3, 4, 5, 6, 7]);
 	}
@@ -251,6 +298,12 @@ function check(){
 
 	// shuffle card bank
 	shuffle(viewModel.currentBank());
+
+	// if same card comes to the front move it to the back, to avoid getting a duplicate question
+	if (viewModel.currentBank()[0] === viewModel.currentCardPosition()){
+		var move = viewModel.currentBank.shift();
+		viewModel.currentBank.push(move);
+	}
 
 	// debug: check what's left in question bank
 	// console.log("bank:"+viewModel.currentBank());
@@ -262,16 +315,6 @@ function check(){
 	saveDataToLocalStorage()
 }
 
-function reloadColours() {
-	for (var i=1; i<53; i++){
-		var perecentageCorrect = viewModel.scores()[i][1] / viewModel.scores()[i][0];
-		var rgbred = Math.round((1 - perecentageCorrect) * 255);
-		var rgbgreen = Math.round((perecentageCorrect * 205) + 50);
-		$('#score'+i).css({
-			"background-color": "rgb("+rgbred+", "+rgbgreen+", 50)"
-	})
-	}
-}
 
 
 function saveDataToLocalStorage() {
@@ -306,8 +349,20 @@ function loadDataFromLocalStorage() {
 		viewModel.nextVisible(parsedData.nextVisible);
         // viewModel.UserName(parsedData.UserName);
     	$('.menu').show(); // there needs to be a better way to do this -- remove disabled attribute but then also save as variable
-    	reloadColours() 
+    	reloadColours();
+    	newQuestion();
     }
+}
+
+function reloadColours() {
+	for (var i=1; i<53; i++){
+		var perecentageCorrect = viewModel.scores()[i][1] / viewModel.scores()[i][0];
+		var rgbred = Math.round((1 - perecentageCorrect) * 255);
+		var rgbgreen = Math.round((perecentageCorrect * 205) + 50);
+		$('#score'+i).css({
+			"background-color": "rgb("+rgbred+", "+rgbgreen+", 50)"
+	})
+	}
 }
 
 function wipeLocalStorage() {

@@ -19,7 +19,7 @@
  <h1>Stack Trainer</h1>
  <div class="menu">
     <div id="buttonlist">
-    <button onclick="window.open('https://github.com/p44v9n/ko-stack-trainer', '_blank')"><!-- <img height="15" src="img/github-512.png" /> -->Contribute</button>
+    <button onclick="window.open('https://github.com/p44v9n/ko-stack-trainer', '_blank')">Contribute <svg class="external" width="14" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1408 928v320q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h704q14 0 23 9t9 23v64q0 14-9 23t-23 9h-704q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113v-320q0-14 9-23t23-9h64q14 0 23 9t9 23zm384-864v512q0 26-19 45t-45 19-45-19l-176-176-652 652q-10 10-23 10t-23-10l-114-114q-10-10-10-23t10-23l652-652-176-176q-19-19-19-45t19-45 45-19h512q26 0 45 19t19 45z"/></svg><!-- <img height="15" src="img/github-512.png" /> --></button>
         <button onclick="viewModel.resourcesVisible(true); viewModel.appVisible(false); viewModel.cheatVisible(false)">Resources</button>
         <button onclick="viewModel.cheatVisible(true); viewModel.appVisible(false); viewModel.resourcesVisible(false)">Cheat Sheet</button>
         <button data-bind="click:wipeLocalStorage">Reset</button>
@@ -29,11 +29,11 @@
 
 
 <div id="welcome" data-bind="visible:welcomeVisible">
-    <h3>Welcome to the Stack Trainer.</h3>
+    <h3>Welcome to the Stack&nbsp;Trainer.</h3>
     <p>Please select what stack you would like to use from the list below.</p>
     <p>Three popular stacks have been included; <del title="Coming soon.">to use a custom stack, please click here.</del></p>
     <select data-bind="value:stackChoice">
-        <option disabled selected hidden></option>
+        <option style="color:#aaa" disabled selected hidden>Please choose a stack</option>
         <option>Tamariz</option>
         <option>Aragón</option>
         <option>Aronson</option>
@@ -41,7 +41,7 @@
 
     <!-- TODO: animate this intro bit; fade in reset button after the text about it appears -->
     <p>Progress will be saved on this device.<br />To reset progress or to choose another stack, please hit the reset button.</p>
-    <button data-bind="enable: (viewModel.stackChoice() !== ''), click:begin">Begin</button>
+    <button data-bind="enable: (viewModel.stackChoice() !== 'Please choose a stack'), click:begin">Begin</button>
 </div>
 
 <div id="cheat" class="panel" data-bind="visible:cheatVisible">
@@ -282,6 +282,7 @@
         <br />
         <div data-bind="visible: checkVisible">
             <button data-bind="enable: (userCardPosition() !== null), click: check ">Check answer</button>
+            <button data-bind="click: dontknow">Not sure</button>
         </div>
     </div>
     <!-- Question style B -->
@@ -297,6 +298,7 @@
         <br />
         <div data-bind="visible: checkVisible">
             <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+            <button data-bind="click: dontknow">Not sure</button>
         </div>
     </div>
     <!-- Question style C -->
@@ -312,6 +314,7 @@
         <br />
         <div data-bind="visible: checkVisible">
             <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+            <button data-bind="click: dontknow">Not sure</button>
         </div>
     </div>
     <!-- Question style D -->
@@ -327,9 +330,12 @@
         <br />
         <div data-bind="visible: checkVisible">
             <button data-bind="enable: (viewModel.userCardValue() !== null) && (viewModel.userCardSuit() !== null), click: check ">Check answer</button>
+            <button data-bind="click: dontknow">Not sure</button>
         </div>
     </div>
-
+    <div id="dontknowbox">
+        <p data-bind="text: currentAnswerAsText"></p>
+    </div>
     <div data-bind="visible: nextVisible">
         <button data-bind="click:newQuestion" id="continue-button">Continue</button>
     </div>

@@ -152,3 +152,15 @@ td {
 	padding:20px;
 	width:100%;
 }
+
+
+
+.external-lin-icon{
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  text-indent: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  color:black;
+}
