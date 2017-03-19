@@ -31,7 +31,7 @@
 <div id="welcome" data-bind="visible:welcomeVisible">
     <h3>Welcome to the Stack&nbsp;Trainer.</h3>
     <p>Please select what stack you would like to use from the list below.</p>
-    <p>Three popular stacks have been included; <del title="Coming soon.">to use a custom stack, please click here.</del></p>
+    <p>Some popular stacks have been included; <del title="Coming soon.">to use a custom stack, please click here.</del></p>
     <select data-bind="value:stackChoice">
         <option style="color:#aaa" disabled selected hidden>Please choose a stack</option>
         <option>Tamariz</option>
@@ -47,198 +47,68 @@
 <div id="cheat" class="panel" data-bind="visible:cheatVisible">
     <a onClick="viewModel.appVisible(true); viewModel.cheatVisible(false)" class="closebutton">✕</a>
     <h1>Cheat sheet for the <span data-bind="text:stackChoice"></span> Stack</h1>
-    <!-- Mnemonica -->
-    <div data-bind="if:viewModel.stackChoice() === 'Tamariz'">
+    <!-- General -->
+    <div>
         <table>
             <tbody>
-                <tr><td>1</td><td>4 of ♣</td></tr>
-                <tr><td>2</td><td>2 of <span class="red">♥</span></td></tr>
-                <tr><td>3</td><td>7 of <span class="red">♦</span></td></tr>
-                <tr><td>4</td><td>3 of ♣</td></tr>
-                <tr><td>5</td><td>4 of <span class="red">♥</span></td></tr>
-                <tr><td>6</td><td>6 of <span class="red">♦</span></td></tr>
-                <tr><td>7</td><td>A of ♠</td></tr>
-                <tr><td>8</td><td>5 of <span class="red">♥</span></td></tr>
-                <tr><td>9</td><td>9 of ♠</td></tr>
-                <tr><td>10</td><td>2 of ♠</td></tr>
-                <tr><td>11</td><td>Q of <span class="red">♥</span></td></tr>
-                <tr><td>12</td><td>3 of <span class="red">♦</span></td></tr>
-                <tr><td>13</td><td>Q of ♣</td></tr>
+                <tr><td>1</td><td><span data-bind="text: stack[1][0]"></span> of <span data-bind="text: stack[1][1], css: {red: stack[1][1] == 'Hearts' || stack[1][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>2</td><td><span data-bind="text: stack[2][0]"></span> of <span data-bind="text: stack[2][1], css: {red: stack[2][1] == 'Hearts' || stack[2][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>3</td><td><span data-bind="text: stack[3][0]"></span> of <span data-bind="text: stack[3][1], css: {red: stack[3][1] == 'Hearts' || stack[3][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>4</td><td><span data-bind="text: stack[4][0]"></span> of <span data-bind="text: stack[4][1], css: {red: stack[4][1] == 'Hearts' || stack[4][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>5</td><td><span data-bind="text: stack[5][0]"></span> of <span data-bind="text: stack[5][1], css: {red: stack[5][1] == 'Hearts' || stack[5][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>6</td><td><span data-bind="text: stack[6][0]"></span> of <span data-bind="text: stack[6][1], css: {red: stack[6][1] == 'Hearts' || stack[6][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>7</td><td><span data-bind="text: stack[7][0]"></span> of <span data-bind="text: stack[7][1], css: {red: stack[7][1] == 'Hearts' || stack[7][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>8</td><td><span data-bind="text: stack[8][0]"></span> of <span data-bind="text: stack[8][1], css: {red: stack[8][1] == 'Hearts' || stack[8][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>9</td><td><span data-bind="text: stack[9][0]"></span> of <span data-bind="text: stack[9][1], css: {red: stack[9][1] == 'Hearts' || stack[9][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>10</td><td><span data-bind="text: stack[10][0]"></span> of <span data-bind="text: stack[10][1], css: {red: stack[10][1] == 'Hearts' || stack[10][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>11</td><td><span data-bind="text: stack[11][0]"></span> of <span data-bind="text: stack[11][1], css: {red: stack[11][1] == 'Hearts' || stack[11][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>12</td><td><span data-bind="text: stack[12][0]"></span> of <span data-bind="text: stack[12][1], css: {red: stack[12][1] == 'Hearts' || stack[12][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>13</td><td><span data-bind="text: stack[13][0]"></span> of <span data-bind="text: stack[13][1], css: {red: stack[13][1] == 'Hearts' || stack[13][1] == 'Diamonds'}"></span></td></tr>
             </tbody>
             <tbody>
-                <tr><td>14</td><td>8 of <span class="red">♥</span></td></tr>
-                <tr><td>15</td><td>6 of ♠</td></tr>
-                <tr><td>16</td><td>5 of ♠</td></tr>
-                <tr><td>17</td><td>9 of <span class="red">♥</span></td></tr>
-                <tr><td>18</td><td>K of ♣</td></tr>
-                <tr><td>19</td><td>2 of <span class="red">♦</span></td></tr>
-                <tr><td>20</td><td>J of <span class="red">♥</span></td></tr>
-                <tr><td>21</td><td>3 of ♠</td></tr>
-                <tr><td>22</td><td>8 of ♠</td></tr>
-                <tr><td>23</td><td>6 of <span class="red">♥</span></td></tr>
-                <tr><td>24</td><td>10 of ♣</td></tr>
-                <tr><td>25</td><td>5 of <span class="red">♦</span></td></tr>
-                <tr><td>26</td><td>K of <span class="red">♦</span></td></tr>
+                <tr><td>14</td><td><span data-bind="text: stack[14][0]"></span> of <span data-bind="text: stack[14][1], css: {red: stack[14][1] == 'Hearts' || stack[14][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>15</td><td><span data-bind="text: stack[15][0]"></span> of <span data-bind="text: stack[15][1], css: {red: stack[15][1] == 'Hearts' || stack[15][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>16</td><td><span data-bind="text: stack[16][0]"></span> of <span data-bind="text: stack[16][1], css: {red: stack[16][1] == 'Hearts' || stack[16][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>17</td><td><span data-bind="text: stack[17][0]"></span> of <span data-bind="text: stack[17][1], css: {red: stack[17][1] == 'Hearts' || stack[17][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>18</td><td><span data-bind="text: stack[18][0]"></span> of <span data-bind="text: stack[18][1], css: {red: stack[18][1] == 'Hearts' || stack[18][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>19</td><td><span data-bind="text: stack[19][0]"></span> of <span data-bind="text: stack[19][1], css: {red: stack[19][1] == 'Hearts' || stack[19][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>20</td><td><span data-bind="text: stack[20][0]"></span> of <span data-bind="text: stack[20][1], css: {red: stack[20][1] == 'Hearts' || stack[20][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>21</td><td><span data-bind="text: stack[21][0]"></span> of <span data-bind="text: stack[21][1], css: {red: stack[21][1] == 'Hearts' || stack[21][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>22</td><td><span data-bind="text: stack[22][0]"></span> of <span data-bind="text: stack[22][1], css: {red: stack[22][1] == 'Hearts' || stack[22][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>23</td><td><span data-bind="text: stack[23][0]"></span> of <span data-bind="text: stack[23][1], css: {red: stack[23][1] == 'Hearts' || stack[23][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>24</td><td><span data-bind="text: stack[24][0]"></span> of <span data-bind="text: stack[24][1], css: {red: stack[24][1] == 'Hearts' || stack[24][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>25</td><td><span data-bind="text: stack[25][0]"></span> of <span data-bind="text: stack[25][1], css: {red: stack[25][1] == 'Hearts' || stack[25][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>26</td><td><span data-bind="text: stack[26][0]"></span> of <span data-bind="text: stack[26][1], css: {red: stack[26][1] == 'Hearts' || stack[26][1] == 'Diamonds'}"></span></td></tr>
             </tbody>
             <tbody>
-                <tr><td>27</td><td>2 of ♣</td></tr>
-                <tr><td>28</td><td>3 of <span class="red">♥</span></td></tr>
-                <tr><td>29</td><td>8 of <span class="red">♦</span></td></tr>
-                <tr><td>30</td><td>5 of ♣</td></tr>
-                <tr><td>31</td><td>K of ♠</td></tr>
-                <tr><td>32</td><td>J of <span class="red">♦</span></td></tr>
-                <tr><td>33</td><td>8 of ♣</td></tr>
-                <tr><td>34</td><td>10 of ♠</td></tr>
-                <tr><td>35</td><td>K of <span class="red">♥</span></td></tr>
-                <tr><td>36</td><td>J of ♣</td></tr>
-                <tr><td>37</td><td>7 of ♠</td></tr>
-                <tr><td>38</td><td>10 of <span class="red">♥</span></td></tr>
-                <tr><td>39</td><td>A of <span class="red">♦</span></td></tr>
+                <tr><td>27</td><td><span data-bind="text: stack[27][0]"></span> of <span data-bind="text: stack[27][1], css: {red: stack[27][1] == 'Hearts' || stack[27][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>28</td><td><span data-bind="text: stack[28][0]"></span> of <span data-bind="text: stack[28][1], css: {red: stack[28][1] == 'Hearts' || stack[28][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>29</td><td><span data-bind="text: stack[29][0]"></span> of <span data-bind="text: stack[29][1], css: {red: stack[29][1] == 'Hearts' || stack[29][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>30</td><td><span data-bind="text: stack[30][0]"></span> of <span data-bind="text: stack[30][1], css: {red: stack[30][1] == 'Hearts' || stack[30][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>31</td><td><span data-bind="text: stack[31][0]"></span> of <span data-bind="text: stack[31][1], css: {red: stack[31][1] == 'Hearts' || stack[31][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>32</td><td><span data-bind="text: stack[32][0]"></span> of <span data-bind="text: stack[32][1], css: {red: stack[32][1] == 'Hearts' || stack[32][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>33</td><td><span data-bind="text: stack[33][0]"></span> of <span data-bind="text: stack[33][1], css: {red: stack[33][1] == 'Hearts' || stack[33][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>34</td><td><span data-bind="text: stack[34][0]"></span> of <span data-bind="text: stack[34][1], css: {red: stack[34][1] == 'Hearts' || stack[34][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>35</td><td><span data-bind="text: stack[35][0]"></span> of <span data-bind="text: stack[35][1], css: {red: stack[35][1] == 'Hearts' || stack[35][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>36</td><td><span data-bind="text: stack[36][0]"></span> of <span data-bind="text: stack[36][1], css: {red: stack[36][1] == 'Hearts' || stack[36][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>37</td><td><span data-bind="text: stack[37][0]"></span> of <span data-bind="text: stack[37][1], css: {red: stack[37][1] == 'Hearts' || stack[37][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>38</td><td><span data-bind="text: stack[38][0]"></span> of <span data-bind="text: stack[38][1], css: {red: stack[38][1] == 'Hearts' || stack[38][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>39</td><td><span data-bind="text: stack[39][0]"></span> of <span data-bind="text: stack[39][1], css: {red: stack[39][1] == 'Hearts' || stack[39][1] == 'Diamonds'}"></span></td></tr>
             </tbody>
             <tbody>
-                <tr><td>40</td><td>4 of ♠</td></tr>
-                <tr><td>41</td><td>7 of <span class="red">♥</span></td></tr>
-                <tr><td>42</td><td>4 of <span class="red">♦</span></td></tr>
-                <tr><td>43</td><td>A of ♣</td></tr>
-                <tr><td>44</td><td>9 of ♣</td></tr>
-                <tr><td>45</td><td>J of ♠</td></tr>
-                <tr><td>46</td><td>Q of <span class="red">♦</span></td></tr>
-                <tr><td>47</td><td>7 of ♣</td></tr>
-                <tr><td>48</td><td>Q of ♠</td></tr>
-                <tr><td>49</td><td>10 of <span class="red">♦</span></td></tr>
-                <tr><td>50</td><td>6 of ♣</td></tr>
-                <tr><td>51</td><td>A of <span class="red">♥</span></td></tr>
-                <tr><td>52</td><td>9 of <span class="red">♦</span></td></tr>
-            </tbody>
-        </table>    
-    </div>
-    <!-- Aragón -->
-    <div data-bind="if:viewModel.stackChoice() === 'Arag&#243;n'">
-        <table>
-            <tbody>
-                <tr><td>1</td><td>J of ♠</td></tr>
-                <tr><td>2</td><td>7 of ♣</td></tr>
-                <tr><td>3</td><td>10 of <span class="red">♥</span></td></tr>
-                <tr><td>4</td><td>A of <span class="red">♦</span></td></tr>
-                <tr><td>5</td><td>4 of ♣</td></tr>
-                <tr><td>6</td><td>7 of <span class="red">♥</span></td></tr>
-                <tr><td>7</td><td>4 of <span class="red">♦</span></td></tr>
-                <tr><td>8</td><td>A of ♠</td></tr>
-                <tr><td>9</td><td>4 of <span class="red">♥</span></td></tr>
-                <tr><td>10</td><td>7 of <span class="red">♦</span></td></tr>
-                <tr><td>11</td><td>4 of ♠</td></tr>
-                <tr><td>12</td><td>A of <span class="red">♥</span></td></tr>
-                <tr><td>13</td><td>10 of <span class="red">♦</span></td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>14</td><td>7 of ♠</td></tr>
-                <tr><td>15</td><td>J of ♣</td></tr>
-                <tr><td>16</td><td>K of <span class="red">♦</span></td></tr>
-                <tr><td>17</td><td>10 of ♠</td></tr>
-                <tr><td>18</td><td>8 of ♣</td></tr>
-                <tr><td>19</td><td>J of <span class="red">♥</span></td></tr>
-                <tr><td>20</td><td>A of ♣</td></tr>
-                <tr><td>21</td><td>K of ♠</td></tr>
-                <tr><td>22</td><td>5 of ♣</td></tr>
-                <tr><td>23</td><td>8 of <span class="red">♥</span></td></tr>
-                <tr><td>24</td><td>3 of <span class="red">♦</span></td></tr>
-                <tr><td>25</td><td>Q of ♠</td></tr>
-                <tr><td>26</td><td>K of <span class="red">♥</span></td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>27</td><td>9 of ♣</td></tr>
-                <tr><td>28</td><td>Q of <span class="red">♥</span></td></tr>
-                <tr><td>29</td><td>6 of ♣</td></tr>
-                <tr><td>30</td><td>9 of <span class="red">♥</span></td></tr>
-                <tr><td>31</td><td>2 of <span class="red">♦</span></td></tr>
-                <tr><td>32</td><td>3 of ♣</td></tr>
-                <tr><td>33</td><td>6 of <span class="red">♥</span></td></tr>
-                <tr><td>34</td><td>5 of <span class="red">♦</span></td></tr>
-                <tr><td>35</td><td>2 of ♠</td></tr>
-                <tr><td>36</td><td>3 of <span class="red">♥</span></td></tr>
-                <tr><td>37</td><td>8 of <span class="red">♦</span></td></tr>
-                <tr><td>38</td><td>5 of ♠</td></tr>
-                <tr><td>39</td><td>K of ♣</td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>40</td><td>3 of ♣</td></tr>
-                <tr><td>41</td><td>2 of ♠</td></tr>
-                <tr><td>42</td><td>9 of <span class="red">♥</span></td></tr>
-                <tr><td>43</td><td>K of ♠</td></tr>
-                <tr><td>44</td><td>6 of ♠</td></tr>
-                <tr><td>45</td><td>4 of ♣</td></tr>
-                <tr><td>46</td><td>8 of <span class="red">♥</span></td></tr>
-                <tr><td>47</td><td>9 of ♣</td></tr>
-                <tr><td>48</td><td>Q of ♠</td></tr>
-                <tr><td>49</td><td>6 of <span class="red">♦</span></td></tr>
-                <tr><td>50</td><td>Q of ♣</td></tr>
-                <tr><td>51</td><td>2 of ♣</td></tr>
-                <tr><td>52</td><td>9 of <span class="red">♦</span></td></tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- Aronson -->
-    <div data-bind="if:viewModel.stackChoice() === 'Aronson'">
-        <table>
-            <tbody>
-                <tr><td>1</td><td>J of ♠</td></tr>
-                <tr><td>2</td><td>K of ♣</td></tr>
-                <tr><td>3</td><td>5 of ♣</td></tr>
-                <tr><td>4</td><td>2 of <span class="red">♥</span></td></tr>
-                <tr><td>5</td><td>9 of ♠</td></tr>
-                <tr><td>6</td><td>A of ♠</td></tr>
-                <tr><td>7</td><td>3 of <span class="red">♥</span></td></tr>
-                <tr><td>8</td><td>6 of ♣</td></tr>
-                <tr><td>9</td><td>8 of <span class="red">♦</span></td></tr>
-                <tr><td>10</td><td>A of ♣</td></tr>
-                <tr><td>11</td><td>10 of ♠</td></tr>
-                <tr><td>12</td><td>5 of <span class="red">♥</span></td></tr>
-                <tr><td>13</td><td>2 of <span class="red">♦</span></td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>14</td><td>K of <span class="red">♦</span></td></tr>
-                <tr><td>15</td><td>7 of <span class="red">♦</span></td></tr>
-                <tr><td>16</td><td>8 of ♣</td></tr>
-                <tr><td>17</td><td>3 of ♠</td></tr>
-                <tr><td>18</td><td>A of <span class="red">♦</span></td></tr>
-                <tr><td>19</td><td>7 of ♠</td></tr>
-                <tr><td>20</td><td>5 of ♠</td></tr>
-                <tr><td>21</td><td>Q of <span class="red">♦</span></td></tr>
-                <tr><td>22</td><td>A of <span class="red">♥</span></td></tr>
-                <tr><td>23</td><td>8 of ♠</td></tr>
-                <tr><td>24</td><td>3 of <span class="red">♦</span></td></tr>
-                <tr><td>25</td><td>7 of <span class="red">♥</span></td></tr>
-                <tr><td>26</td><td>Q of <span class="red">♥</span></td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>27</td><td>5 of <span class="red">♦</span></td></tr>
-                <tr><td>28</td><td>7 of ♣</td></tr>
-                <tr><td>29</td><td>4 of <span class="red">♥</span></td></tr>
-                <tr><td>30</td><td>K of <span class="red">♥</span></td></tr>
-                <tr><td>31</td><td>4 of <span class="red">♦</span></td></tr>
-                <tr><td>32</td><td>10 of <span class="red">♦</span></td></tr>
-                <tr><td>33</td><td>J of ♣</td></tr>
-                <tr><td>34</td><td>J of <span class="red">♥</span></td></tr>
-                <tr><td>35</td><td>10 of ♣</td></tr>
-                <tr><td>36</td><td>J of <span class="red">♦</span></td></tr>
-                <tr><td>37</td><td>4 of ♠</td></tr>
-                <tr><td>38</td><td>10 of <span class="red">♥</span></td></tr>
-                <tr><td>39</td><td>6 of <span class="red">♥</span></td></tr>
-            </tbody>
-            <tbody>
-                <tr><td>40</td><td>J of <span class="red">♦</span></td></tr>
-                <tr><td>41</td><td>8 of ♠</td></tr>
-                <tr><td>42</td><td>10 of ♣</td></tr>
-                <tr><td>43</td><td>2 of ♣</td></tr>
-                <tr><td>44</td><td>5 of <span class="red">♥</span></td></tr>
-                <tr><td>45</td><td>6 of <span class="red">♦</span></td></tr>
-                <tr><td>46</td><td>3 of ♠</td></tr>
-                <tr><td>47</td><td>2 of <span class="red">♥</span></td></tr>
-                <tr><td>48</td><td>9 of <span class="red">♦</span></td></tr>
-                <tr><td>49</td><td>6 of ♠</td></tr>
-                <tr><td>50</td><td>Q of ♣</td></tr>
-                <tr><td>51</td><td>Q of <span class="red">♦</span></td></tr>
-                <tr><td>52</td><td>9 of ♠</td></tr>
+                <tr><td>40</td><td><span data-bind="text: stack[40][0]"></span> of <span data-bind="text: stack[40][1], css: {red: stack[40][1] == 'Hearts' || stack[40][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>41</td><td><span data-bind="text: stack[41][0]"></span> of <span data-bind="text: stack[41][1], css: {red: stack[41][1] == 'Hearts' || stack[41][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>42</td><td><span data-bind="text: stack[42][0]"></span> of <span data-bind="text: stack[42][1], css: {red: stack[42][1] == 'Hearts' || stack[42][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>43</td><td><span data-bind="text: stack[43][0]"></span> of <span data-bind="text: stack[43][1], css: {red: stack[43][1] == 'Hearts' || stack[43][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>44</td><td><span data-bind="text: stack[44][0]"></span> of <span data-bind="text: stack[44][1], css: {red: stack[44][1] == 'Hearts' || stack[44][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>45</td><td><span data-bind="text: stack[45][0]"></span> of <span data-bind="text: stack[45][1], css: {red: stack[45][1] == 'Hearts' || stack[45][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>46</td><td><span data-bind="text: stack[46][0]"></span> of <span data-bind="text: stack[46][1], css: {red: stack[46][1] == 'Hearts' || stack[46][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>47</td><td><span data-bind="text: stack[47][0]"></span> of <span data-bind="text: stack[47][1], css: {red: stack[47][1] == 'Hearts' || stack[47][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>48</td><td><span data-bind="text: stack[48][0]"></span> of <span data-bind="text: stack[48][1], css: {red: stack[48][1] == 'Hearts' || stack[48][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>49</td><td><span data-bind="text: stack[49][0]"></span> of <span data-bind="text: stack[49][1], css: {red: stack[49][1] == 'Hearts' || stack[49][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>50</td><td><span data-bind="text: stack[50][0]"></span> of <span data-bind="text: stack[50][1], css: {red: stack[50][1] == 'Hearts' || stack[50][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>51</td><td><span data-bind="text: stack[51][0]"></span> of <span data-bind="text: stack[51][1], css: {red: stack[51][1] == 'Hearts' || stack[51][1] == 'Diamonds'}"></span></td></tr>
+                <tr><td>52</td><td><span data-bind="text: stack[52][0]"></span> of <span data-bind="text: stack[52][1], css: {red: stack[52][1] == 'Hearts' || stack[52][1] == 'Diamonds'}"></span></td></tr>
             </tbody>
         </table>
     </div>
@@ -251,10 +121,10 @@
     <p>To learn more about card magic using memorised stacks, please see the following:</p>
     <ul>
         <li><em><a href="http://www.simonaronson.com/Memories%20Are%20Made%20of%20This.pdf" target="_blank">Memories Are Made Of This</a></em>, a free ebook by Simon Aronson that gives an introduction to magic with memorised decks</li>
-        <li><em>Mnemonica</em> by Juan Tamariz, which reveals the workings of the <em>Mnemonica</em> stack, teaches how to memorise any stack forever in three hours, and has over a hundred tricks and routines</li>
-        <li><em>Bound To Please</em> by Simon Aronson</li>
+        <li><a href="https://www.vanishingincmagic.com/magic/card-magic/mnemonica/" target="_blank"><em>Mnemonica</em> by Juan Tamariz</a>, which reveals the workings of the <em>Mnemonica</em> stack, teaches how to memorise any stack forever in three hours, and has over a hundred tricks and routines</li>
+        <li><a href="http://simonaronson.com/boundtoplease.html" target="_blank"><em>Bound To Please</em> by Simon Aronson</a></li>
         <li><em>Memorandum</em> by Woody Aragón, soon to be released in English</li>
-
+        <li><a href="http://patrickredford.com/uncategorized/twenty-two-great-reasons-to-learn-the-redford-stack/" target="_blank">This blogpost</a> about the benefits of Patrick Redford's stack, which is explained in his new book, <em>Temporarily Out Of Order</em></li>
     </ul>
 </div>
 
