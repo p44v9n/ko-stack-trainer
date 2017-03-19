@@ -4,7 +4,7 @@ A super simple, super lightweight, cross-device memory game for memorising a spe
 
 ## Bugs
 - (Minor) fouc on load
-- (Minor) the 'cheat sheet' is hardcoded, would be better to generate from selected stack
+- (Minor) ~the 'cheat sheet' is hardcoded, would be better to generate from selected stack~ use symbols on cheat sheet for suits
 
 ## Features to add
 - Minimal progres bar
