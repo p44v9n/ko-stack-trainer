@@ -1,5 +1,6 @@
 var viewModel = {
 	stackChoice: ko.observable(),
+	stack:ko.observable([null, ['4', 'Clubs'], ['2', 'Hearts'], ['7', 'Diamonds'], ['3', 'Clubs'], ['4', 'Hearts'], ['6', 'Diamonds'], ['Ace', 'Spades'], ['5', 'Hearts'], ['9', 'Spades'], ['2', 'Spades'], ['Queen', 'Hearts'], ['3', 'Diamonds'], ['Queen', 'Clubs'], ['8', 'Hearts'], ['6', 'Spades'], ['5', 'Spades'], ['9', 'Hearts'], ['King', 'Clubs'], ['2', 'Diamonds'], ['Jack', 'Hearts'], ['3', 'Spades'], ['8', 'Spades'], ['6', 'Hearts'], ['10', 'Clubs'], ['5', 'Diamonds'], ['King', 'Diamonds'], ['2', 'Clubs'], ['3', 'Hearts'], ['8', 'Diamonds'], ['5', 'Clubs'], ['King', 'Spades'], ['Jack', 'Diamonds'], ['8', 'Clubs'], ['10', 'Spades'], ['King', 'Hearts'], ['Jack', 'Clubs'], ['7', 'Spades'], ['10', 'Hearts'], ['Ace', 'Diamonds'], ['4', 'Spades'], ['7', 'Hearts'], ['4', 'Diamonds'], ['Ace', 'Clubs'], ['9', 'Clubs'], ['Jack', 'Spades'], ['Queen', 'Diamonds'], ['7', 'Clubs'], ['Queen', 'Spades'], ['10', 'Diamonds'], ['6', 'Clubs'], ['Ace', 'Hearts'], ['9', 'Diamonds']]),
 
 	// actual values
 	currentCardPosition: ko.observable(),
@@ -35,15 +36,21 @@ var viewModel = {
 
 viewModel.stackChoice.subscribe(function (value){
 	switch(value) {
-		case 'Tamariz': stack = tamarizStack;
+		case 'Tamariz': viewModel.stack(tamarizStack);
 		break;
-		case 'Aragón': stack = aragonStack;
+		case 'Aragón': viewModel.stack(aragonStack);
 		break;
-		case 'Aronson': stack = aronsonStack;
+		case 'Aronson': viewModel.stack(aronsonStack);
 		break;
-		case 'Redford': stack = redfordStack;
+		case 'Redford': viewModel.stack(redfordStack);
 		break;
-		case 'nikolaStack': stack = nikolaStack;
+		case 'Nikola': viewModel.stack(nikolaStack);
+		break;
+		case 'Hungry Jackass': viewModel.stack(hungryJackassStack);
+		break;
+		case 'Eight Kings': viewModel.stack(eightKingsStack);
+		break;
+		case 'Si Stebbins': viewModel.stack(siStebbinsStack);
 		break;
 	}
 });
@@ -69,13 +76,14 @@ function shuffle(array) {
     return array;
 }
 
-
 var tamarizStack = [null, ['4', 'Clubs'], ['2', 'Hearts'], ['7', 'Diamonds'], ['3', 'Clubs'], ['4', 'Hearts'], ['6', 'Diamonds'], ['Ace', 'Spades'], ['5', 'Hearts'], ['9', 'Spades'], ['2', 'Spades'], ['Queen', 'Hearts'], ['3', 'Diamonds'], ['Queen', 'Clubs'], ['8', 'Hearts'], ['6', 'Spades'], ['5', 'Spades'], ['9', 'Hearts'], ['King', 'Clubs'], ['2', 'Diamonds'], ['Jack', 'Hearts'], ['3', 'Spades'], ['8', 'Spades'], ['6', 'Hearts'], ['10', 'Clubs'], ['5', 'Diamonds'], ['King', 'Diamonds'], ['2', 'Clubs'], ['3', 'Hearts'], ['8', 'Diamonds'], ['5', 'Clubs'], ['King', 'Spades'], ['Jack', 'Diamonds'], ['8', 'Clubs'], ['10', 'Spades'], ['King', 'Hearts'], ['Jack', 'Clubs'], ['7', 'Spades'], ['10', 'Hearts'], ['Ace', 'Diamonds'], ['4', 'Spades'], ['7', 'Hearts'], ['4', 'Diamonds'], ['Ace', 'Clubs'], ['9', 'Clubs'], ['Jack', 'Spades'], ['Queen', 'Diamonds'], ['7', 'Clubs'], ['Queen', 'Spades'], ['10', 'Diamonds'], ['6', 'Clubs'], ['Ace', 'Hearts'], ['9', 'Diamonds']];
 var aronsonStack = [null, ['Jack', 'Spades'], ['King', 'Clubs'], ['5', 'Clubs'], ['2', 'Hearts'], ['9', 'Spades'], ['Ace', 'Spades'], ['3', 'Hearts'], ['6', 'Clubs'], ['8', 'Diamonds'], ['Ace', 'Clubs'], ['10', 'Spades'], ['5', 'Hearts'], ['2', 'Diamonds'], ['King', 'Diamonds'], ['7', 'Diamonds'], ['8', 'Clubs'], ['3', 'Spades'], ['Ace', 'Diamonds'], ['7', 'Spades'], ['5', 'Spades'], ['Queen', 'Diamonds'], ['Ace', 'Hearts'], ['8', 'Spades'], ['3', 'Diamonds'], ['7', 'Hearts'], ['Queen', 'Hearts'], ['5', 'Diamonds'], ['7', 'Clubs'], ['4', 'Hearts'], ['King', 'Hearts'], ['4', 'Diamonds'], ['10', 'Diamonds'], ['Jack', 'Clubs'], ['Jack', 'Hearts'], ['10', 'Clubs'], ['Jack', 'Diamonds'], ['4', 'Spades'], ['10', 'Hearts'], ['6', 'Hearts'], ['3', 'Clubs'], ['2', 'Spades'], ['9', 'Hearts'], ['King', 'Spades'], ['6', 'Spades'], ['4', 'Clubs'], ['8', 'Hearts'], ['9', 'Clubs'], ['Queen', 'Spades'], ['6', 'Diamonds'], ['Queen', 'Clubs'], ['2', 'Clubs'], ['9', 'Diamonds']];
 var redfordStack = [null, ['Queen', 'Hearts'], ['2', 'Spades'], ['5', 'Diamonds'], ['8', 'Clubs'], ['Jack', 'Hearts'], ['King', 'Spades'], ['10', 'Hearts'], ['7', 'Clubs'], ['4', 'Diamonds'], ['Ace', 'Spades'], ['8', 'Hearts'], ['5', 'Clubs'], ['2', 'Diamonds'], ['Queen', 'Spades'], ['9', 'Hearts'], ['6', 'Clubs'], ['3', 'Diamonds'], ['10', 'Spades'], ['7', 'Hearts'], ['4', 'Clubs'], ['Ace', 'Diamonds'], ['Jack', 'Spades'], ['9', 'Spades'], ['6', 'Hearts'], ['3', 'Clubs'], ['King', 'Diamonds'], ['Queen', 'Diamonds'], ['10', 'Diamonds'], ['7', 'Spades'], ['4', 'Hearts'], ['Ace', 'Clubs'], ['Jack', 'Diamonds'], ['8', 'Spades'], ['5', 'Hearts'], ['2', 'Clubs'], ['2', 'Hearts'], ['Queen', 'Clubs'], ['9', 'Diamonds'], ['6', 'Spades'], ['3', 'Hearts'], ['King', 'Clubs'], ['4', 'Spades'], ['Ace', 'Hearts'], ['Jack', 'Clubs'], ['8', 'Diamonds'], ['5', 'Spades'], ['3', 'Spades'], ['King', 'Hearts'], ['10', 'Clubs'], ['7', 'Diamonds'], ['6', 'Diamonds'], ['9', 'Clubs']];
 var aragonStack = [null, ['Jack', 'Spades'], ['7', 'Clubs'], ['10', 'Hearts'], ['Ace', 'Diamonds'], ['4', 'Clubs'], ['7', 'Hearts'], ['4', 'Diamonds'], ['Ace', 'Spades'], ['4', 'Hearts'], ['7', 'Diamonds'], ['4', 'Spades'], ['Ace', 'Hearts'], ['10', 'Diamonds'], ['7', 'Spades'], ['Jack', 'Clubs'], ['King', 'Diamonds'], ['10', 'Spades'], ['8', 'Clubs'], ['Jack', 'Hearts'], ['Ace', 'Clubs'], ['King', 'Spades'], ['5', 'Clubs'], ['8', 'Hearts'], ['3', 'Diamonds'], ['Queen', 'Spades'], ['King', 'Hearts'], ['9', 'Clubs'], ['Queen', 'Hearts'], ['6', 'Clubs'], ['9', 'Hearts'], ['2', 'Diamonds'], ['3', 'Clubs'], ['6', 'Hearts'], ['5', 'Diamonds'], ['2', 'Spades'], ['3', 'Hearts'], ['8', 'Diamonds'], ['5', 'Spades'], ['King', 'Clubs'], ['Jack', 'Diamonds'], ['8', 'Spades'], ['10', 'Clubs'], ['2', 'Clubs'], ['5', 'Hearts'], ['6', 'Diamonds'], ['3', 'Spades'], ['2', 'Hearts'], ['9', 'Diamonds'], ['6', 'Spades'], ['Queen', 'Clubs'], ['Queen', 'Diamonds'], ['9', 'Spades']];
 var nikolaStack = [null, ['6', 'Diamonds'], ['5', 'Clubs'], ['King', 'Clubs'], ['Jack', 'Hearts'], ['5', 'Spades'], ['9', 'Diamonds'], ['9', 'Spades'], ['Queen', 'Hearts'], ['3', 'Clubs'], ['10', 'Clubs'], ['King', 'Spades'], ['Ace', 'Hearts'], ['4', 'Diamonds'], ['Jack', 'Diamonds'], ['King', 'Diamonds'], ['King', 'Hearts'], ['2', 'Diamonds'], ['Queen', 'Clubs'], ['9', 'Clubs'], ['10', 'Hearts'], ['8', 'Diamonds'], ['2', 'Clubs'], ['Ace', 'Clubs'], ['7', 'Hearts'], ['7', 'Clubs'], ['4', 'Spades'], ['7', 'Spades'], ['9', 'Hearts'], ['8', 'Spades'], ['6', 'Spades'], ['6', 'Clubs'], ['2', 'Hearts'], ['Ace', 'Spades'], ['Jack', 'Spades'], ['4', 'Clubs'], ['5', 'Hearts'], ['10', 'Spades'], ['Ace', 'Diamonds'], ['Jack', 'Clubs'], ['4', 'Hearts'], ['2', 'Spades'], ['7', 'Diamonds'], ['Queen', 'Spades'], ['3', 'Hearts'], ['3', 'Spades'], ['8', 'Clubs'], ['10', 'Diamonds'], ['6', 'Hearts'], ['5', 'Diamonds'], ['3', 'Diamonds'], ['Queen', 'Diamonds'], ['8', 'Hearts']];
-var stack = tamarizStack;
+var eightKingsStack = [];
+var hungryJackassStack = [null, ['Jack', 'Clubs'], ['Ace', 'Hearts'], ['8', 'Spades'], ['5', 'Diamonds'], ['3', 'Clubs'], ['King', 'Hearts'], ['10', 'Spades'], ['2', 'Diamonds'], ['6', 'Clubs'], ['7', 'Hearts'], ['4', 'Spades'], ['9', 'Diamonds'], ['Queen', 'Clubs'], ['Jack', 'Hearts'], ['Ace', 'Spades'], ['8', 'Diamonds'], ['5', 'Clubs'], ['3', 'Hearts'], ['King', 'Spades'], ['10', 'Diamonds'], ['2', 'Clubs'], ['6', 'Hearts'], ['7', 'Spades'], ['4', 'Diamonds'], ['9', 'Clubs'], ['Queen', 'Hearts'], ['Jack', 'Spades'], ['Ace', 'Diamonds'], ['8', 'Clubs'], ['5', 'Hearts'], ['3', 'Spades'], ['King', 'Diamonds'], ['10', 'Clubs'], ['2', 'Hearts'], ['6', 'Spades'], ['7', 'Diamonds'], ['4', 'Clubs'], ['9', 'Hearts'], ['Queen', 'Spades'], ['Jack', 'Diamonds'], ['Ace', 'Clubs'], ['8', 'Hearts'], ['5', 'Spades'], ['3', 'Diamonds'], ['King', 'Clubs'], ['10', 'Hearts'], ['2', 'Spades'], ['6', 'Diamonds'], ['7', 'Clubs'], ['4', 'Hearts'], ['9', 'Spades'], ['Queen', 'Diamonds']];
+var siStebbinsStack = [null, ['6', 'Hearts'], ['9', 'Spades'], ['Queen', 'Diamonds'], ['2', 'Clubs'], ['5', 'Hearts'], ['8', 'Spades'], ['Jack', 'Diamonds'], ['Ace', 'Clubs'], ['4', 'Hearts'], ['7', 'Spades'], ['10', 'Diamonds'], ['King', 'Clubs'], ['3', 'Hearts'], ['6', 'Spades'], ['9', 'Diamonds'], ['Queen', 'Clubs'], ['2', 'Hearts'], ['5', 'Spades'], ['8', 'Diamonds'], ['Jack', 'Clubs'], ['Ace', 'Hearts'], ['4', 'Spades'], ['7', 'Diamonds'], ['10', 'Clubs'], ['King', 'Hearts'], ['3', 'Spades'], ['6', 'Diamonds'], ['9', 'Clubs'], ['Queen', 'Hearts'], ['2', 'Spades'], ['5', 'Diamonds'], ['8', 'Clubs'], ['Jack', 'Hearts'], ['Ace', 'Spades'], ['4', 'Diamonds'], ['7', 'Clubs'], ['10', 'Hearts'], ['King', 'Spades'], ['3', 'Diamonds'], ['6', 'Clubs'], ['9', 'Hearts'], ['Queen', 'Spades'], ['2', 'Diamonds'], ['5', 'Clubs'], ['8', 'Hearts'], ['Jack', 'Spades'], ['Ace', 'Diamonds'], ['4', 'Clubs'], ['7', 'Hearts'], ['10', 'Spades'], ['King', 'Diamonds'], ['3', 'Clubs']];
 
 var createNewStack = function(){
 	// todo -- user created stack
@@ -140,8 +148,8 @@ function newQuestion(){
 
 	// set position, value and suit of this card
 	viewModel.currentCardPosition(x);
-	viewModel.currentCardValue(stack[x][0]);
-	viewModel.currentCardSuit(stack[x][1]);
+	viewModel.currentCardValue(viewModel.stack()[x][0]);
+	viewModel.currentCardSuit(viewModel.stack()[x][1]);
 
 	// choose what type of question to use:
 	viewModel.randomSeed((Math.floor((Math.random() * 4) + 1)));
@@ -184,16 +192,16 @@ function dontknow(){
 	break;
 	case 3: // user gives card before a given card
 		if (viewModel.currentCardPosition() === 1){
-			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is card 52, the '+stack[52][0]+' of '+stack[52][1]+'.');
+			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is card 52, the '+viewModel.stack()[52][0]+' of '+viewModel.stack()[52][1]+'.');
 		} else {
-			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is the '+stack[viewModel.currentCardPosition() - 1][0]+' of '+stack[viewModel.currentCardPosition() - 1][1]+'.');
+			viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card before it is the '+viewModel.stack()[viewModel.currentCardPosition() - 1][0]+' of '+viewModel.stack()[viewModel.currentCardPosition() - 1][1]+'.');
 		}
 	break;
 	case 4: // user gives card that is after a given card
 		if (viewModel.currentCardPosition() === 52){
-					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is card 1, the '+stack[1][0]+' of '+stack[1][1]+'.');
+					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is card 1, the '+viewModel.stack()[1][0]+' of '+viewModel.stack()[1][1]+'.');
 		} else {
-					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is the '+stack[viewModel.currentCardPosition() + 1][0]+' of '+stack[viewModel.currentCardPosition() + 1][1]+'.');
+					viewModel.currentAnswerAsText('The '+viewModel.currentCardValue()+' of '+viewModel.currentCardSuit()+' is card '+viewModel.currentCardPosition()+', so the card after it is the '+viewModel.stack()[viewModel.currentCardPosition() + 1][0]+' of '+viewModel.stack()[viewModel.currentCardPosition() + 1][1]+'.');
 		}
 	break;
 	}
@@ -222,22 +230,22 @@ function check(){
 		break;
 		case 3: // user gives card before a given card
 			if (viewModel.currentCardPosition() === 1){
-				if ((viewModel.userCardSuit() === stack[52][1]) && (viewModel.userCardValue() === stack[52][0])){
+				if ((viewModel.userCardSuit() === viewModel.stack()[52][1]) && (viewModel.userCardValue() === viewModel.stack()[52][0])){
 					viewModel.currentCorrect(true);
 				}
 			} else {
-				if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() - 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() - 1][0])){
+				if ((viewModel.userCardSuit() === viewModel.stack()[viewModel.currentCardPosition() - 1][1]) && (viewModel.userCardValue() === viewModel.stack()[viewModel.currentCardPosition() - 1][0])){
 					viewModel.currentCorrect(true);
 				}
 			}
 		break;
 		case 4: // user gives card that is after a given card
 			if (viewModel.currentCardPosition() === 52){
-				if ((viewModel.userCardSuit() === stack[1][1]) && (viewModel.userCardValue() === stack[1][0])){
+				if ((viewModel.userCardSuit() === viewModel.stack()[1][1]) && (viewModel.userCardValue() === viewModel.stack()[1][0])){
 					viewModel.currentCorrect(true);
 				}
 			} else {
-				if ((viewModel.userCardSuit() === stack[viewModel.currentCardPosition() + 1][1]) && (viewModel.userCardValue() === stack[viewModel.currentCardPosition() + 1][0])){
+				if ((viewModel.userCardSuit() === viewModel.stack()[viewModel.currentCardPosition() + 1][1]) && (viewModel.userCardValue() === viewModel.stack()[viewModel.currentCardPosition() + 1][0])){
 					viewModel.currentCorrect(true);
 				}
 
